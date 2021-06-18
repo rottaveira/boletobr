@@ -94,10 +94,18 @@ namespace BoletoBr.Interfaces
         IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao);
 
         /// <summary>
+        /// Retorna ocorrencias de pagamento
+        /// </summary>
+        /// <param name="numeroOcorrencia"></param>
+        /// <returns></returns>
+        ICodigoOcorrencia ObtemCodigoOcorrenciaPagamento(string numeroOcorrencia);
+
+        /// <summary>
         /// Faz a leitura do arquivo de retorno.
         /// </summary>
         /// <param name="linhasArquivo">Linhas do arquivo que será processado</param>
         RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo);
+        RetornoGenericoPagamento LerArquivoRetornoPagamento(List<string> linhasArquivo);
         RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos);
         RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos);
         int CodigoJurosMora(CodigoJurosMora codigoJurosMora);

@@ -22,39 +22,43 @@ namespace BoletoBr.Fabricas
                     /* 001 - Banco do Brasil */
                     case "001":
                         return new BancoBrasil();
-                        break;
+                        
                     /* 003 - Banco da Amazônia */
                     case "003":
                         return new Bancos.Amazonia.BancoAmazonia();
-                        break;
+                        
                     case "021":
                         return new Bancos.Banestes.BancoBanestes();
-                        break;
+                        
                     case "033":
                         return new Bancos.Santander.BancoSantander();
                     /* 104 - Caixa */
                     case "104":
                         return new Bancos.Cef.BancoCef();
-                        break;
+                        
                     /* 237 - Bradesco */
                     case "237":
                         return new Bancos.Bradesco.BancoBradesco();
-                        break;
+                        
+                    /* 246 - ABC */
+                    case "246":
+                        return new Bancos.Abc.BancoAbc();
+                        
                     /* 341 - Itaú */
                     case "341":
                         return new Bancos.Itau.BancoItau();
-                        break;
+                        
                     /* 399 - HSBC */
                     case "399":
                         return new Bancos.Hsbc.BancoHsbc();
-                        break;
+                        
                     /* 070 - BRB */
                     case "070":
                         return new Bancos.BRB.BancoBRB();
-                        break;
+                        
                     case "756":
                         return new Bancos.Sicoob.BancoSicoob();
-                        break;
+                        
                     /* 422 - Safra*/
                     case "422":
                         return new Bancos.Safra.BancoSafra();
@@ -64,6 +68,9 @@ namespace BoletoBr.Fabricas
                     /* 041 - BANCO BANRISUL */
                     case "041":
                         return new BancoBanrisul();
+                    /* 748 - SCREDI  */
+                    case "748":
+                        return new Bancos.Sicredi.BancoSicredi();
                     default:
                         throw new NotImplementedException("Banco " + codigoBanco +
                                                           " ainda não foi implementado.");

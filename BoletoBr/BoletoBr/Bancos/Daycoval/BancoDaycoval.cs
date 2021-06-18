@@ -1,16 +1,13 @@
 ﻿using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.Dominio;
-using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Dominio; 
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq; 
 
 namespace BoletoBr.Bancos.Daycoval
 {
@@ -525,6 +522,16 @@ namespace BoletoBr.Bancos.Daycoval
         public int CodigoProteso(bool protestar = true)
         {
             return 0;
+        }
+
+        public RetornoGenericoPagamento LerArquivoRetornoPagamento(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaPagamento(string numeroOcorrencia)
+        {
+            throw new NotImplementedException();
         }
     }
 }

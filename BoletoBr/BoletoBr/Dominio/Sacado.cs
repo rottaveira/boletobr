@@ -1,7 +1,12 @@
-﻿using System;
+﻿using BoletoBr.Dominio;
+using System;
 
 namespace BoletoBr
 {
+    /// <summary>
+    /// #Contas a pagar - Favorecido - Fornecedor - quem recebe
+    /// #Contas a receber - Pagador - Cliente
+    /// </summary>
     public class Sacado
     {
         public string Nome { get; set; }
@@ -30,6 +35,19 @@ namespace BoletoBr
             this.EnderecoSacado = endereco;
         }
 
+        public Sacado( string cpfCnpj, string codigo, Endereco endereco, ContaBancaria contaBancaria )
+        { 
+            this.CpfCnpj = cpfCnpj;
+            this.EnderecoSacado = endereco;
+            this.ContaBancariaSacado = contaBancaria;
+            this.CodigoSacado = codigo;
+        }
+
         public string IdentificacaoClienteBanco { get; set; }
+
+        public ContaBancaria ContaBancariaSacado { get; set; }
+        public string CodigoSacado { get; set; }
+
+
     }
 }

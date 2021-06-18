@@ -105,6 +105,7 @@ namespace BoletoBr.Bancos.Santander
                 (DateTime)linha.ExtrairValorDaLinha(95, 100).ToString().ToDateTimeFromDdMmAa();
             // Zeros (101-110)
             objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(111, 117);
+            objRetornar.NumeroConvenio = objRetornar.CodigoDoBeneficiario;
             // Brancos (118-391)
             objRetornar.Versao = linha.ExtrairValorDaLinha(114, 119).BoletoBrToInt();
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400);

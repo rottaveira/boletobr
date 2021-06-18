@@ -99,7 +99,7 @@ namespace BoletoBr
 
         public string DvAgenciaCedente { get; set; }
         public string DvContaCorrente { get; set; }
-        public int NumeroConvenio { get; set; }
+        public string NumeroConvenio { get; set; }
         public string NumeroControle { get; set; }
 
         /// <summary>
@@ -397,6 +397,7 @@ namespace BoletoBr
         /// Valor da Tarifa / Despesa de Cobrança
         /// </summary>
         public decimal ValorTarifa { get; set; }
+        public decimal TaxaBoleto { get; set; }
 
         /// <summary>
         /// Código do canal de liquidação ou da baixa do título
@@ -484,6 +485,14 @@ namespace BoletoBr
         public int CodigoDeResponsabilidade { get; set; }
         public int DVCodigoDeResponsabilidade { get; set; }
 
+        #endregion
+
+        #region #748 | SICREDI
+        public string TipoCarteiraSicredi { get; set; }
+        public string TipoCobrancaSicredi { get; set; }
+        public string CodigoDoPagadorNaCooperativa { get; set; }
+        public string CodigoDoPagadorNoAssociado { get; set; }
+        public DateTime? DataPrevistaLancamentoConta{ get; set; }
         #endregion
     }
 }

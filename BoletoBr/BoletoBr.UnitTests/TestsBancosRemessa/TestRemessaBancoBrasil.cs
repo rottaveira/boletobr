@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo;
+using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Bancos.Brasil;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
+using BoletoBr.Fabricas;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.TestsBancosRemessa
@@ -193,6 +195,92 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             //arquivo.WriteLine(linhasEscrever);
 
             //arquivo.Close();
+        }
+
+
+        [TestMethod]
+        public void TestGerarRemessaPagamento()
+        {
+            var contaBancariaCedente = new ContaBancaria("1234", "8", "12345", "6");
+            var empresaPagadora = new BoletoBr.Cedente("7980171", "7980171", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
+            empresaPagadora.EnderecoCedente = new Endereco()
+            {
+                Bairro = "Jardins",
+                Cep = "75690000",
+                Cidade = "Goiabalândia",
+                Complemento = "EDF EXECUTIVO",
+                Logradouro = "Rua x",
+                Numero = "25",
+                SiglaUf = "GO",
+            };
+
+            var objEndereco = new Endereco()
+            {
+                Bairro = "Trenzim",
+                Cep = "75690000",
+                Cidade = "Mangalandia",
+                Complemento = "Galho esquerdo",
+                Logradouro = "Rua 3",
+                Numero = "5",
+                SiglaUf = "GO",
+            };
+            var contaBancariaFavorecido = new BoletoBr.ContaBancaria("4343", "0", "35432", "2");
+            var favorecido = new BoletoBr.Sacado("012.365.489-01", "1", objEndereco, contaBancariaFavorecido);
+            favorecido.Nome = "Fulano da silva";
+            var bancoEmpresa = BancoFactory.ObterBanco("001", "");
+            var bancoFavorecido = BancoFactory.ObterBanco("237", "");
+            var pagamento = new BoletoBr.Pagamento()
+            {
+                BancoEmpresa = bancoEmpresa,
+                BancoFavorecido = bancoFavorecido,
+                CodigoBanco = bancoEmpresa.CodigoBanco,
+                CodigoBancoFavorecido = bancoFavorecido.CodigoBanco,
+                CodigoCamaraCentralizadora = "018",
+                CodigoFinalidadeDoc = "",
+                CodigoFinalidadeTed = "5",
+                FinalidadePagamento = "CC",
+                DataVencimento = new DateTime(2021, 4, 21),
+                Empresa = empresaPagadora,
+                Favorecido = favorecido,
+                ValorPagamento = 5M,
+                ValorDesconto = 0,
+                ValorJurosMora = 0,
+                ValorMulta = 0,
+                CodigoConvenio = "7980171",
+                SeuNumero = "1015",
+                TipoServico = "0",
+                FormaDeLancamento = "03",
+
+                 ValorTitulo = 5M,
+                CodBarras = "24691859100000299845004110028796200000000150"
+            };
+
+            var remessa = new RemessaCnab240
+            {
+                Header = new HeaderRemessaCnab240(pagamento, 1)
+            };
+
+            var loteRemessa = new LoteRemessaCnab240
+            {
+                HeaderLote = new HeaderLoteRemessaCnab240(pagamento, 1),
+                TrailerLote = new TrailerLoteRemessaCnab240(4)
+            };
+
+            remessa.Trailer = new TrailerRemessaCnab240(1, 6);
+
+            var escritor = EscritorArquivoRemessaFactory.ObterEscritorRemessaPagamento(remessa);
+            var listaBoletoBrRemessa = new List<Pagamento>() { pagamento };
+            var fabricaRemessa = new RemessaFactory();
+            var remessaPronta = fabricaRemessa.GerarRemessa(remessa.Header, loteRemessa.HeaderLote, listaBoletoBrRemessa, loteRemessa.TrailerLote, remessa.Trailer);
+            var linhasEscrever = escritor.EscreverTexto(remessaPronta);
+
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var linha in linhasEscrever)
+            {
+                sb.AppendLine(linha);
+            }
+              
         }
     }
 }

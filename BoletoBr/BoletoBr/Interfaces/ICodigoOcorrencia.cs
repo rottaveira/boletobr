@@ -6,5 +6,6 @@
         int QtdDias { get; set; }
         double Valor { get; set; }
         string Descricao { get; }
+        string CodigoText { get; set; }
     }
 }

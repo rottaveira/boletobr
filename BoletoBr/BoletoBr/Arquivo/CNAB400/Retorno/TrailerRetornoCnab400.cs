@@ -127,5 +127,10 @@ namespace BoletoBr
         public string UltimoNossoNumero { get; set; }
 
         #endregion
+
+        #region #748 | SICREDI
+        public int CodigoBeneficiario { get; set; }
+        
+        #endregion
     }
 }

@@ -39,6 +39,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     detalheGenericoAdd.ValorDocumento = valorDoc;
                     detalheGenericoAdd.DataVencimento = Convert.ToDateTime(d.SegmentoT.DataVencimento);
                     detalheGenericoAdd.ModalidadeNossoNumero = d.SegmentoT.ModalidadeNossoNumero;
+                    detalheGenericoAdd.NomeSacado = d.SegmentoT.NomeSacado;
                     //detalheGenericoAdd.ValorDocumento = Math.Round(d.SegmentoT.ValorTitulo, 2);
                     //detalheGenericoAdd.ValorTarifaCustas = d.SegmentoT.ValorTarifas / 100;
                     //detalheGenericoAdd.CodigoMovimento = d.SegmentoT.CodigoMovimento.ToString();
@@ -79,7 +80,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.DataDebitoTarifaCustas = Convert.ToDateTime(d.SegmentoU.DataDebitoTarifa.ToString());
 
                     //DATA LIQUIDAÇÃO E DATA OCORRENCIA
-                    if (detalheGenericoAdd.Pago && detalheGenericoAdd.DataLiquidacao == DateTime.MinValue)
+                    if (detalheGenericoAdd.Pago && detalheGenericoAdd.DataLiquidacao.GetValueOrDefault() == DateTime.MinValue)
                         detalheGenericoAdd.DataLiquidacao = d.SegmentoU.DataOcorrencia;
 
                     RegistrosDetalhe.Add(detalheGenericoAdd);
@@ -96,7 +97,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
 
             /* Transformar de CNAB400 para formato genérico */
             Header.CodigoDoBanco = retornoCnab400.Header.CodigoDoBanco;
-            Header.Convenio = retornoCnab400.Header.NumeroConvenio.ToString(CultureInfo.InvariantCulture);
+            Header.Convenio = retornoCnab400.Header.NumeroConvenio?.ToString(CultureInfo.InvariantCulture);
             Header.CodigoAgencia = retornoCnab400.Header.CodigoAgenciaCedente.ToString(CultureInfo.InvariantCulture);
             Header.DvAgencia = retornoCnab400.Header.DvAgenciaCedente;
             Header.NumeroConta = retornoCnab400.Header.ContaCorrente;
@@ -143,7 +144,9 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     CodigoOcorrencia = String.IsNullOrEmpty(registroAtual.MotivoCodigoOcorrencia) ? "00" : registroAtual.MotivoCodigoOcorrencia,
                     MensagemOcorrenciaRetornoBancario = ocorrencia.Descricao,
                     Ocorrencia = ocorrencia,
-                    NumeroConvenio = registroAtual.NumeroConvenio
+                    NumeroConvenio = registroAtual.NumeroConvenio,
+                    TaxaBoleto = registroAtual.TaxaBoleto,
+                    CodigoBanco = banco.CodigoBanco
                 };
 
                 //DATA LIQUIDAÇÃO E DATA OCORRENCIA

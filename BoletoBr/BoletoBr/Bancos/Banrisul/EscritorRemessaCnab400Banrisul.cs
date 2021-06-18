@@ -33,8 +33,8 @@ namespace BoletoBr.Bancos.Itau
                 header = header.PreencherValorNaLinha(3, 9, "REMESSA");
                 header = header.PreencherValorNaLinha(10,  26, string.Empty.PadLeft(17,' '));
                 header = header.PreencherValorNaLinha(27, 30, infoHeader.Agencia.PadLeft(4, '0'));
-                header = header.PreencherValorNaLinha(31, 38, infoHeader.CodigoEmpresa.PadLeft(8,'0'));
-                header = header.PreencherValorNaLinha(39, 39, infoHeader.DvContaCorrente.PadLeft(1, '0'));
+                header = header.PreencherValorNaLinha(31, 39, infoHeader.CodigoEmpresa.PadLeft(9,'0'));
+                // header = header.PreencherValorNaLinha(39, 39, infoHeader.DigitoCedenteEmpresa.PadLeft(1, '0'));
                 header = header.PreencherValorNaLinha(40, 46, string.Empty.PadRight(7, ' '));
                 header = header.PreencherValorNaLinha(47, 76, nomeEmpresa.PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(77, 87, "041BANRISUL");
@@ -107,10 +107,12 @@ namespace BoletoBr.Bancos.Itau
                 detalhe = detalhe.PreencherValorNaLinha(1, 1, "1"); // Identificação do Registro Transação
                 detalhe = detalhe.PreencherValorNaLinha(2, 17, string.Empty.PadLeft(16,' '));
                 detalhe = detalhe.PreencherValorNaLinha(18, 21, infoDetalhe.Agencia.PadLeft(4,'0'));
-                detalhe = detalhe.PreencherValorNaLinha(22, 29, infoDetalhe.CodigoCedente.PadLeft(8,'0'));
-                detalhe = detalhe.PreencherValorNaLinha(30, 30, (infoDetalhe.DVCedente.Length > 1 ? infoDetalhe.DVCedente.Substring(0,1) : infoDetalhe.DVCedente) .PadLeft(1,'0'));
+                detalhe = detalhe.PreencherValorNaLinha(22, 30, infoDetalhe.CodigoCedente.PadLeft(9,'0'));
+                // detalhe = detalhe.PreencherValorNaLinha(30, 30, (infoDetalhe.DVCedente.Length > 1 ? infoDetalhe.DVCedente.Substring(0,1) : infoDetalhe.DVCedente).PadLeft(1,'0'));
                 detalhe = detalhe.PreencherValorNaLinha(31, 37, string.Empty.PadLeft(7,' '));
+
                 detalhe = detalhe.PreencherValorNaLinha(38, 62, infoDetalhe.NumeroDocumento.PadLeft(25,'0'));
+
                 detalhe = detalhe.PreencherValorNaLinha(63, 72, infoDetalhe.NossoNumeroFormatado.Replace(",","").Replace("-","").Replace(".","").PadLeft(10,'0'));
                 detalhe = detalhe.PreencherValorNaLinha(73, 104, (infoDetalhe.MensagemLinha1 != null ? infoDetalhe.MensagemLinha1.Length <= 32 ? infoDetalhe.MensagemLinha1.PadLeft(32, ' '): infoDetalhe.MensagemLinha1.Substring(0,32): "").PadLeft(32, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(105, 107, string.Empty.PadLeft(3,' '));
@@ -149,13 +151,16 @@ namespace BoletoBr.Bancos.Itau
                  *  Informe VIDE038050 nas posições 111-120;
                  *  Informe o seu número com até 13 dígitos nas posições 038-050.
                  *  O seu número informado será impresso no bloqueto e informado no arquivo retorno.
+                 *  
+                 *  ---- Atualização 27-04-2018
+                 *  Termo "VIDE038050" não deverá ser utilizado
                  */
-                detalhe = detalhe.PreencherValorNaLinha(111, 120, "VIDE038050");
+                detalhe = detalhe.PreencherValorNaLinha(111, 120, infoDetalhe.NumeroDocumento.TrimStart('0').PadLeft(10, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, infoDetalhe.DataVencimento.ToString("ddMMyy"));
                 detalhe = detalhe.PreencherValorNaLinha(127, 139, infoDetalhe.ValorBoleto.ToStringParaValoresDecimais().PadLeft(13, '0'));
                 // Valor Nominal do Título
                 detalhe = detalhe.PreencherValorNaLinha(140, 142, "041");
-                detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, ' '));
 
 
                 /*
@@ -218,9 +223,10 @@ namespace BoletoBr.Bancos.Itau
                  */
 
 
-                var codigoInstrucao = infoDetalhe.NroDiasParaProtesto > 0 ? "09" : 
-                                        infoDetalhe.PrazoBaixaDevolucao > 0 ? "15" :
-                                        "23";
+                var codigoInstrucao = infoDetalhe.NroDiasParaProtesto > 0 ? "09"
+                                        : infoDetalhe.PrazoBaixaDevolucao > 0 ? "15"
+                                        : infoDetalhe.PercentualMulta > 0 ? "18"
+                                        : "23";
                 var Instrucao = infoDetalhe.NroDiasParaProtesto > 0 ? infoDetalhe.NroDiasParaProtesto :
                     infoDetalhe.PrazoBaixaDevolucao > 0 ? infoDetalhe.PrazoBaixaDevolucao : 0;
                 detalhe = detalhe.PreencherValorNaLinha(157, 158, codigoInstrucao.PadLeft(2,'0'));
@@ -269,9 +275,12 @@ namespace BoletoBr.Bancos.Itau
                 
                 detalhe = detalhe.PreencherValorNaLinha(335, 349, cidadeSacado.PadRight(15, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(350, 351, infoDetalhe.UfPagador.PadRight(2, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(352, 355, string.Empty.PadLeft(4,'0'));//TAXA AO DIA PARA PAGAMENTO ANTECIPADO
-                detalhe = detalhe.PreencherValorNaLinha(356, 357, string.Empty.PadLeft(2, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(358, 369, string.Empty.PadLeft(12, carteiras.Contains(infoDetalhe.CarteiraCobranca.ToUpper()) ? ' ': '0'));//VALOR PARA CÁLCULO DO DESCONTO
+
+                /// detalhe = detalhe.PreencherValorNaLinha(352, 355, string.Empty.PadLeft(4,'0'));//TAXA AO DIA PARA PAGAMENTO ANTECIPADO
+                /// detalhe = detalhe.PreencherValorNaLinha(356, 357, string.Empty.PadLeft(2, ' '));
+                /// detalhe = detalhe.PreencherValorNaLinha(358, 369, string.Empty.PadLeft(12, carteiras.Contains(infoDetalhe.CarteiraCobranca.ToUpper()) ? ' ': '0'));//VALOR PARA CÁLCULO DO DESCONTO
+                detalhe = detalhe.PreencherValorNaLinha(352, 369, string.Empty.PadLeft(18, ' '));
+
                 detalhe = detalhe.PreencherValorNaLinha(370, 371, infoDetalhe.NroDiasParaProtesto.ToString().PadLeft(2, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(372, 394, string.Empty.PadLeft(23, ' '));
                 // Nro Sequencial do Registro no Arquivo

@@ -39,7 +39,7 @@ namespace BoletoBr
         /// Número sequencial atribuído pelo sistema do banco.
         /// </summary>
         public string SequencialRetorno { get; set; }
-        public int NumeroConvenio { get; set; }
+        public string NumeroConvenio { get; set; }
 
         #endregion
 
@@ -138,6 +138,11 @@ namespace BoletoBr
                 throw new Exception("Erro ao desmembrar registro.", ex);
             }
         }
+        #endregion
+
+        #region #748 | SICREDI
+        public string CpfCnpjBeneficiario { get; set; }
+        public string VersaoSicredi { get; set; }
         #endregion
     }
 }

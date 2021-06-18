@@ -10,6 +10,8 @@ namespace BoletoBr.Enums
     {
         Isento,
         Percentual,
-        Valor
+        Valor,
+        Diario,
+        Mensal
     }
 }

@@ -110,7 +110,7 @@ namespace BoletoBr.Bancos.Brasil
                 CodigoENomeBanco = linha.ExtrairValorDaLinha(77, 94),
                 DataGeracaoGravacao = Convert.ToDateTime(linha.ExtrairValorDaLinha(95, 100).ToDateTimeFromDdMmAa()),
                 SequencialRetorno = linha.ExtrairValorDaLinha(101, 107),
-                NumeroConvenio = linha.ExtrairValorDaLinha(150, 156).BoletoBrToInt(),
+                NumeroConvenio = linha.ExtrairValorDaLinha(150, 156).BoletoBrToStringSafe(),
                 NumeroSequencial = linha.ExtrairValorDaLinha(395, 400)
             };
 
@@ -142,7 +142,7 @@ namespace BoletoBr.Bancos.Brasil
                 objRetornar.DvAgenciaCedente = linha.ExtrairValorDaLinha(22, 22);
                 objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(23, 30);
                 objRetornar.DvContaCorrente = linha.ExtrairValorDaLinha(31, 31);
-                objRetornar.NumeroConvenio = linha.ExtrairValorDaLinha(32, 38).BoletoBrToInt();
+                objRetornar.NumeroConvenio = linha.ExtrairValorDaLinha(32, 38).BoletoBrToInt().BoletoBrToStringSafe();
                 objRetornar.NumeroControle = linha.ExtrairValorDaLinha(39, 63);
                 objRetornar.NossoNumero = linha.ExtrairValorDaLinha(64, 80);
                 objRetornar.TipoCobranca = linha.ExtrairValorDaLinha(81, 81).BoletoBrToInt();

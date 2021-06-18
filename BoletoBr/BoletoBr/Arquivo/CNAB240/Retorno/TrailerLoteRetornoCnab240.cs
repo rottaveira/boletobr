@@ -12,12 +12,15 @@
         public decimal ValorTitulosCobrancaCaucionada { get; set; }
         public long QtdTitulosCobrancaDescontada { get; set; }
         public decimal ValorTitulosCobrancaDescontada { get; set; }
+        public string UsoBanco{ get; set; }
 
         #region Bradesco
 
         public long QtdTitulosCobrancaVinculada { get; set; }
         public decimal ValorTitulosCobrancaVinculada { get; set; }
         public string NumeroAvisoLancamento { get; set; }
+        public string Ocorrencia { get; set; }
+        public decimal Valor { get; set; }
 
         #endregion
     }

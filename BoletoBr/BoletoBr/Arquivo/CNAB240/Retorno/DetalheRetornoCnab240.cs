@@ -23,6 +23,16 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
             SegmentoU = segmentoU;
         }
 
+        public DetalheRetornoCnab240(DetalheSegmentoARetornoCnab240 segmentoA)
+        {
+            SegmentoA = segmentoA;
+        }
+
+        public DetalheRetornoCnab240(DetalheSegmentoBRetornoCnab240 segmentoB)
+        {
+            SegmentoB = segmentoB;
+        }
+
         public DetalheRetornoCnab240(DetalheSegmentoWRetornoCnab240 segmentoW)
         {
             SegmentoW = segmentoW;
@@ -49,7 +59,10 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
 
         public DetalheSegmentoWRetornoCnab240 SegmentoW { get; set; }
 
-        public DetalheSegmentoERetornoCnab240 SegmentoE { get; set; }
+        public DetalheSegmentoERetornoCnab240 SegmentoE { get; set; } 
+        public DetalheSegmentoARetornoCnab240 SegmentoA { get; set; } 
+        public DetalheSegmentoBRetornoCnab240 SegmentoB { get; set; } 
+        public DetalheSegmentoJRetornoCnab240 SegmentoJ { get; set; } 
 
         #endregion
     }

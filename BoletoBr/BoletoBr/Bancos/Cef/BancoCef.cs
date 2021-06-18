@@ -40,7 +40,7 @@ namespace BoletoBr.Bancos.Cef
             CodigoBanco = "104";
             DigitoBanco = "0";
             NomeBanco = "Caixa Econômica Federal";
-            LocalDePagamento = "Pagável preferencialmente nas agências da Caixa ou Lotéricas.";
+            LocalDePagamento = "PREFERENCIALMENTE NAS CASAS LOTÉRICAS ATÉ O VALOR LIMITE";
             MoedaBanco = "9";
         }
 
@@ -73,8 +73,8 @@ namespace BoletoBr.Bancos.Cef
             if (String.IsNullOrEmpty(boleto.CedenteBoleto.CodigoCedente))
                 throw new Exception("Código do cedente não foi informado.");
 
-            if (boleto.CedenteBoleto.CodigoCedente.Length > 6)
-                throw new Exception("O código do cedente deve no máximo 6 dígitos");
+            if (boleto.CedenteBoleto.CodigoCedente.Length > 7)
+                throw new Exception("O código do cedente deve no máximo 7 dígitos");
         }
 
         public void FormataMoeda(Boleto boleto)
@@ -108,7 +108,7 @@ namespace BoletoBr.Bancos.Cef
             /* Formata o código do cedente
              * Inserindo o dígito verificador
              */
-            string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0');
+            string codigoCedente = boleto.CedenteBoleto.CodigoCedente;
             string dvCodigoCedente = Common.Mod11Base9(codigoCedente).ToString(CultureInfo.InvariantCulture); //Base9 
 
             if (boleto.CedenteBoleto.DigitoCedente.Equals(-1))
@@ -168,10 +168,10 @@ namespace BoletoBr.Bancos.Cef
             //Cobran�a sem registro, nosso n�mero com 17 d�gitos. 
 
             //Posi��o 20 - 25
-            string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0');
+            string codigoCedente = boleto.CedenteBoleto.CodigoCedente;
 
             // Posi��o 26
-            string dvCodigoCedente = Common.Mod11Base9(codigoCedente).ToString(CultureInfo.InvariantCulture);
+            string dvCodigoCedente = codigoCedente.Length == 7 ?"": Common.Mod11Base9(codigoCedente).ToString(CultureInfo.InvariantCulture);
 
             //Posi��o 27 - 29
             //De acordo com documenta��o, posi��o 3 a 5 do nosso numero
@@ -1157,6 +1157,16 @@ namespace BoletoBr.Bancos.Cef
         public int CodigoProteso(bool protestar = true)
         {
             return 0;
+        }
+
+        public RetornoGenericoPagamento LerArquivoRetornoPagamento(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaPagamento(string numeroOcorrencia)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -3,6 +3,10 @@ using System.Drawing;
 
 namespace BoletoBr
 {
+    /// <summary>
+    /// #Contas a pagar - Pagador - Empresa
+    /// #Contas a receber - Favorecido - quem recebe
+    /// </summary>
     public class Cedente
     {
         public ContaBancaria ContaBancariaCedente { get; set; }
@@ -11,6 +15,7 @@ namespace BoletoBr
         public string Convenio { get; set; }
         public int DigitoCedente { get; set; }
         public string CpfCnpj { get; set; }
+        public string Operacao { get; set; }
         public string Nome { get; set; }
         public Endereco EnderecoCedente { get; set; }
         public Image LogoCedente { get; set; }
@@ -38,7 +43,7 @@ namespace BoletoBr
         #region #041 Banrisul
         public string CodigoClienteOfficeBanking { get; set; }
         #endregion
-        public Cedente(string codigoCedente, int digitoCedente, string cpfCnpj, string nome, ContaBancaria contaBancaria, Endereco enderecoCedente)
+        public Cedente(string codigoCedente, int digitoCedente, string cpfCnpj, string nome, ContaBancaria contaBancaria, Endereco enderecoCedente,string operacao = "")
         {
             this.CodigoCedente = codigoCedente;
             this.DigitoCedente = digitoCedente;
@@ -46,9 +51,10 @@ namespace BoletoBr
             this.Nome = nome;
             this.EnderecoCedente = enderecoCedente;
             this.ContaBancariaCedente = contaBancaria;
+            this.Operacao = operacao;
         }
 
-        public Cedente(string codigoCedente, string convenio, int digitoCedente, string cpfCnpj, string nome, ContaBancaria contaBancaria, Endereco enderecoCedente)
+        public Cedente(string codigoCedente, string convenio, int digitoCedente, string cpfCnpj, string nome, ContaBancaria contaBancaria, Endereco enderecoCedente, string operacao = "")
         {
             this.CodigoCedente = codigoCedente;
             this.Convenio = convenio;
@@ -57,6 +63,7 @@ namespace BoletoBr
             this.Nome = nome;
             this.EnderecoCedente = enderecoCedente;
             this.ContaBancariaCedente = contaBancaria;
+            this.Operacao = operacao;
         }
     }
 }

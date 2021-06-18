@@ -30,6 +30,9 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         public string UsoBanco { get; set; }
         public string UsoEmpresa { get; set; }
         public string UsoFebraban { get; set; }
+        public string Ocorrencia { get; set; }
+        public string TipoServico { get; set; }
+
 
         #region Banco do Brasil
 
@@ -51,8 +54,7 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// C/C = 45981-36
         /// Neste caso o DV da Ag/Conta = 6
         /// </summary>
-        public string DvAgenciaConta { get; set; }
-
+        public string DvAgenciaConta { get; set; } 
         #endregion
 
         #region Caixa

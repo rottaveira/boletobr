@@ -104,8 +104,7 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(80, 94);
-            objRetornar.DataGeracaoGravacao =
-                (DateTime) linha.ExtrairValorDaLinha(95, 100).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataGeracaoGravacao = (DateTime)linha.ExtrairValorDaLinha(95, 100).ToString().ToDateTimeFromDdMmAa();
             objRetornar.Densidade = linha.ExtrairValorDaLinha(101, 105);
             objRetornar.LiteralDensidade = linha.ExtrairValorDaLinha(106, 108);
             objRetornar.SequencialRetorno = linha.ExtrairValorDaLinha(109, 113);

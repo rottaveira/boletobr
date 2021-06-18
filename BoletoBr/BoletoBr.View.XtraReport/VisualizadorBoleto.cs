@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using DevExpress.XtraPrinting;
-using DevExpress.XtraPrinting.BarCode;
+using System.Linq; 
 using DevExpress.XtraReports.UI;
 
 namespace BoletoBr.View.XtraReport
@@ -12,9 +10,13 @@ namespace BoletoBr.View.XtraReport
     {
         Carne,
         Fatura,
+        FaturaSalinas,
         Normal,
         FaturaCarta,
-        CarneA5
+        CarneA5,
+        FaturaSafra,
+        FaturaBradesco,
+        FaturaSicredi
     }
 
     /// <summary>
@@ -27,12 +29,17 @@ namespace BoletoBr.View.XtraReport
     {
         private readonly List<BoletoBr.Boleto> _boletos;
         private readonly ModeloBoleto _modeloBoleto;
+        private string _TipoDescricaoNossoNumero;
+        private bool _bancoCaixa;
 
-        public VisualizadorBoleto(ModeloBoleto modeloBoleto, List<Boleto> boletos)
+        public VisualizadorBoleto(ModeloBoleto modeloBoleto, List<Boleto> boletos, string TipoDescricaoNossoNumero = "")
         {
             _boletos = boletos;
             _modeloBoleto = modeloBoleto;
+            _TipoDescricaoNossoNumero = TipoDescricaoNossoNumero;
+            _bancoCaixa = boletos.Any(f => f.BancoBoleto.CodigoBanco == "104");
         }
+
 
         public DevExpress.XtraReports.UI.XtraReport AtualizarLogoDoBancoNoModelo()
         {
@@ -91,16 +98,28 @@ namespace BoletoBr.View.XtraReport
                     rptXtraReport = new CarneBoletoGenericoRpt();
                     break;
                 case ModeloBoleto.Fatura:
-                    rptXtraReport = new BoletoGenericoRpt();
+                    rptXtraReport = new BoletoGenericoRpt(_TipoDescricaoNossoNumero, _bancoCaixa);
+                    break;
+                case ModeloBoleto.FaturaSalinas:
+                    rptXtraReport = new BoletoFaturaSalinasRpt();
                     break;
                 case ModeloBoleto.Normal:
-                    rptXtraReport = new BoletoGenericoRpt();
+                    rptXtraReport = new BoletoGenericoRpt(_TipoDescricaoNossoNumero, _bancoCaixa);
                     break;
                 case ModeloBoleto.FaturaCarta:
                     rptXtraReport = new BoletoFaturaCarta();
                     break;
                 case ModeloBoleto.CarneA5:
                     rptXtraReport = new CarneBoletoA5Rpt();
+                    break;
+                case ModeloBoleto.FaturaSafra:
+                    rptXtraReport = new BoletoSafraRpt();
+                    break;
+                case ModeloBoleto.FaturaBradesco:
+                    rptXtraReport = new BoletoBradescoRpt();
+                    break;
+                case ModeloBoleto.FaturaSicredi:
+                    rptXtraReport = new BoletoSicrediRpt();
                     break;
                 default:
                     throw new Exception("O modelo utilizado não foi reconhecido.");

@@ -46,6 +46,33 @@ namespace BoletoBr.Fabricas
             return objReturn;
         }
 
+        public RemessaCnab240 GerarRemessa(HeaderRemessaCnab240 header, HeaderLoteRemessaCnab240 headerLote,
+            List<Pagamento> pagamentos, TrailerLoteRemessaCnab240 trailerLote,
+            TrailerRemessaCnab240 trailer, bool utilizaSegmentoR = false)
+        {
+            var objReturn = new RemessaCnab240();
+
+            objReturn.Header = header;
+            objReturn.Lotes = new List<LoteRemessaCnab240>();
+
+            var ultimoLoteAdicionado = objReturn.AdicionarLote(headerLote, trailerLote);
+
+            // Usado para identificar com número único e sequencial cada boleto (registro) dentro do lote.
+            var contador = 1;
+            var reg1 = 1;
+            var reg2 = 2;  
+
+            foreach (var pagamentoAddRemessa in pagamentos)
+            {
+                objReturn.AdicionarBoletoAoLote(ultimoLoteAdicionado, pagamentoAddRemessa, contador, reg1, reg2 );
+                contador++; 
+            }
+
+            objReturn.Trailer = trailer;
+
+            return objReturn;
+        }
+
         public RemessaCnab400 GerarRemessa(HeaderRemessaCnab400 header, List<Boleto> boletos,
             List<DetalheRemessaCnab400> detalhes, TrailerRemessaCnab400 trailer)
         {

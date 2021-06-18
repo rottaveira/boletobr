@@ -23,7 +23,7 @@ namespace BoletoBr.Bancos.Brasil
         private string _digitoAutoConferenciaNossoNumero = String.Empty;
         private int _digitoAutoConferenciaBoleto = 0;
         #endregion
-        
+
         public BancoBrasil()
         {
             CodigoBanco = "001";
@@ -110,7 +110,7 @@ namespace BoletoBr.Bancos.Brasil
             #endregion Carteira 16
 
             #region Carteira 17
-            
+
             //Carteira 17
             if (boleto.CarteiraCobranca.Codigo.Equals("17"))
             {
@@ -130,7 +130,7 @@ namespace BoletoBr.Bancos.Brasil
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, o número do convênio deve ter 6 ou 7 posições", boleto.CarteiraCobranca.Codigo));
                 }
             }
-            
+
             #endregion Carteira 17
 
             #region Carteira 17-019
@@ -482,7 +482,7 @@ namespace BoletoBr.Bancos.Brasil
         {
             return carteira.Split('-')[0];
         }
-        
+
         internal static string Mod11BancoBrasil(string value)
         {
             #region Trecho do manual DVMD11.doc
@@ -1060,7 +1060,7 @@ namespace BoletoBr.Bancos.Brasil
             digitoMod = Common.Mod10(campo1);
             campo1 = campo1 + digitoMod;
             campo1 = Common.Mid(campo1, 1, 5) + "." + Common.Mid(campo1, 6, 5);
-            
+
             /*
             Campo 2 (DDDDD.DDDDDY)
             D = Posição 25 a 34 do código de barras
@@ -1163,337 +1163,483 @@ namespace BoletoBr.Bancos.Brasil
             switch (numeroOcorrencia)
             {
                 case 02:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 02,
-                        Descricao = "Confirmação de Entrada de Título".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 02,
+                            Descricao = "Confirmação de Entrada de Título".ToUpper()
+                        };
+                    }
                 case 03:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 03,
-                        Descricao = "ENTRADA REJEITADA".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 03,
+                            Descricao = "ENTRADA REJEITADA".ToUpper()
+                        };
+                    }
                 case 05:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 05,
-                        Descricao = "Liquidado sem registro (carteira 17-tipo4)".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 05,
+                            Descricao = "Liquidado sem registro (carteira 17-tipo4)".ToUpper()
+                        };
+                    }
                 case 06:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 06,
-                        Descricao = "Liquidação Normal".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 06,
+                            Descricao = "Liquidação Normal".ToUpper()
+                        };
+                    }
                 case 07:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 07,
-                        Descricao = "Liquidação por Conta/Parcial".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 07,
+                            Descricao = "Liquidação por Conta/Parcial".ToUpper()
+                        };
+                    }
                 case 08:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 08,
-                        Descricao = "Liquidação por Saldo".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 08,
+                            Descricao = "Liquidação por Saldo".ToUpper()
+                        };
+                    }
                 case 09:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 09,
-                        Descricao = "Baixa de Titulo".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 09,
+                            Descricao = "Baixa de Titulo".ToUpper()
+                        };
+                    }
                 case 10:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 10,
-                        Descricao = "Baixa Solicitada".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 10,
+                            Descricao = "Baixa Solicitada".ToUpper()
+                        };
+                    }
                 case 11:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 11,
-                        Descricao =
-                            "Títulos em Ser (constara somente do arquivo de existência de cobrança, fornecido mediante solicitação do cliente)"
-                                .ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 11,
+                            Descricao =
+                                "Títulos em Ser (constara somente do arquivo de existência de cobrança, fornecido mediante solicitação do cliente)"
+                                    .ToUpper()
+                        };
+                    }
                 case 12:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 12,
-                        Descricao = "Abatimento Concedido".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 12,
+                            Descricao = "Abatimento Concedido".ToUpper()
+                        };
+                    }
                 case 13:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 13,
-                        Descricao = "Abatimento Cancelado".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 13,
+                            Descricao = "Abatimento Cancelado".ToUpper()
+                        };
+                    }
                 case 14:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 14,
-                        Descricao = "Alteração de Vencimento do título".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 14,
+                            Descricao = "Alteração de Vencimento do título".ToUpper()
+                        };
+                    }
                 case 15:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 15,
-                        Descricao = "Liquidação em Cartório".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 15,
+                            Descricao = "Liquidação em Cartório".ToUpper()
+                        };
+                    }
                 case 16:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 16,
-                        Descricao = "Confirmação de alteração de juros de mora".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 16,
+                            Descricao = "Confirmação de alteração de juros de mora".ToUpper()
+                        };
+                    }
                 case 19:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 19,
-                        Descricao = "Confirmação de recebimento de instruções para protesto".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 19,
+                            Descricao = "Confirmação de recebimento de instruções para protesto".ToUpper()
+                        };
+                    }
                 case 20:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 20,
-                        Descricao = "Débito em Conta".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 20,
+                            Descricao = "Débito em Conta".ToUpper()
+                        };
+                    }
                 case 21:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 21,
-                        Descricao = "Alteração do Nome do Sacado".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 21,
+                            Descricao = "Alteração do Nome do Sacado".ToUpper()
+                        };
+                    }
                 case 22:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 22,
-                        Descricao = "Alteração do Endereço do Sacado".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 22,
+                            Descricao = "Alteração do Endereço do Sacado".ToUpper()
+                        };
+                    }
                 case 23:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 23,
-                        Descricao = "Indicação de encaminhamento a cartório".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 23,
+                            Descricao = "Indicação de encaminhamento a cartório".ToUpper()
+                        };
+                    }
                 case 24:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 24,
-                        Descricao = "Sustar Protesto".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 24,
+                            Descricao = "Sustar Protesto".ToUpper()
+                        };
+                    }
                 case 25:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 25,
-                        Descricao = "Dispensar Juros de mora".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 25,
+                            Descricao = "Dispensar Juros de mora".ToUpper()
+                        };
+                    }
                 case 26:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 26,
-                        Descricao =
-                            "Alteração do número do título dado pelo Cedente (Seu número) – 10 e 15 posições".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 26,
+                            Descricao =
+                                "Alteração do número do título dado pelo Cedente (Seu número) – 10 e 15 posições".ToUpper()
+                        };
+                    }
                 case 28:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 28,
-                        Descricao = "Manutenção de titulo vencido".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 28,
+                            Descricao = "Manutenção de titulo vencido".ToUpper()
+                        };
+                    }
                 case 31:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 31,
-                        Descricao = "Conceder desconto".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 31,
+                            Descricao = "Conceder desconto".ToUpper()
+                        };
+                    }
                 case 32:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 32,
-                        Descricao = "Não conceder desconto".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 32,
+                            Descricao = "Não conceder desconto".ToUpper()
+                        };
+                    }
                 case 33:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 33,
-                        Descricao = "Retificar desconto".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 33,
+                            Descricao = "Retificar desconto".ToUpper()
+                        };
+                    }
                 case 34:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 34,
-                        Descricao = "Alterar data para desconto".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 34,
+                            Descricao = "Alterar data para desconto".ToUpper()
+                        };
+                    }
                 case 35:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 35,
-                        Descricao = "Cobrar Multa".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 35,
+                            Descricao = "Cobrar Multa".ToUpper()
+                        };
+                    }
                 case 36:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 36,
-                        Descricao = "Dispensar Multa".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 36,
+                            Descricao = "Dispensar Multa".ToUpper()
+                        };
+                    }
                 case 37:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 37,
-                        Descricao = "Dispensar Indexador".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 37,
+                            Descricao = "Dispensar Indexador".ToUpper()
+                        };
+                    }
                 case 38:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 38,
-                        Descricao = "Dispensar prazo limite para recebimento".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 38,
+                            Descricao = "Dispensar prazo limite para recebimento".ToUpper()
+                        };
+                    }
                 case 39:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 39,
-                        Descricao = "Alterar prazo limite para recebimento".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 39,
+                            Descricao = "Alterar prazo limite para recebimento".ToUpper()
+                        };
+                    }
                 case 41:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 41,
-                        Descricao = "Alteração do número do controle do participante (25 posições)".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 41,
+                            Descricao = "Alteração do número do controle do participante (25 posições)".ToUpper()
+                        };
+                    }
                 case 42:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 42,
-                        Descricao = "Alteração do número do documento do sacado (CNPJ/CPF)".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 42,
+                            Descricao = "Alteração do número do documento do sacado (CNPJ/CPF)".ToUpper()
+                        };
+                    }
                 case 44:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 44,
-                        Descricao = "Título pago com cheque devolvido".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 44,
+                            Descricao = "Título pago com cheque devolvido".ToUpper()
+                        };
+                    }
                 case 46:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 46,
-                        Descricao = "Título pago com cheque, aguardando compensação".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 46,
+                            Descricao = "Título pago com cheque, aguardando compensação".ToUpper()
+                        };
+                    }
                 case 72:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 72,
-                        Descricao =
-                            "Alteração de tipo de cobrança (específico para títulos das carteiras 11 e 17)".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 72,
+                            Descricao =
+                                "Alteração de tipo de cobrança (específico para títulos das carteiras 11 e 17)".ToUpper()
+                        };
+                    }
                 case 73:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 73,
-                        Descricao = "Confirmação de Instrução de Parâmetro de Pagamento Parcial".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 73,
+                            Descricao = "Confirmação de Instrução de Parâmetro de Pagamento Parcial".ToUpper()
+                        };
+                    }
                 case 96:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 96,
-                        Descricao = "Despesas de Protesto".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 96,
+                            Descricao = "Despesas de Protesto".ToUpper()
+                        };
+                    }
                 case 97:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 97,
-                        Descricao = "Despesas de Sustação de Protesto".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 97,
+                            Descricao = "Despesas de Sustação de Protesto".ToUpper()
+                        };
+                    }
                 case 98:
-                {
-                    return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 98,
-                        Descricao = "Débito de Custas Antecipadas".ToUpper()
-                    };
-                }
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = 98,
+                            Descricao = "Débito de Custas Antecipadas".ToUpper()
+                        };
+                    }
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, numeroOcorrencia.ToString()));
+        }
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaPagamento(string numeroOcorrencia)
+        {
+            switch (numeroOcorrencia)
+            {
+                case "00": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "00", Descricao = "Pagamento confirmado".ToUpper() }; }
+                case "01": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "01", Descricao = "Insuficiência de Fundos - Débito Não Efetuado".ToUpper() }; }
+                case "02": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "02", Descricao = "Crédito ou Débito Cancelado pelo Pagador/Credor".ToUpper() }; }
+                case "03": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "03", Descricao = "Débito Autorizado pela Agência - Efetuado".ToUpper() }; }
+                case "AA": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AA", Descricao = "Controle Inválido".ToUpper() }; }
+                case "AB": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AB", Descricao = "Tipo de Operação Inválido".ToUpper() }; }
+                case "AC": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AC", Descricao = "Tipo de Serviço Inválido".ToUpper() }; }
+                case "AD": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AD", Descricao = "Forma de Lançamento Inválida".ToUpper() }; }
+                case "AE": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AE", Descricao = "Tipo/Número de Inscrição Inválido".ToUpper() }; }
+                case "AF": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AF", Descricao = "Código de Convênio Inválido".ToUpper() }; }
+                case "AG": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AG", Descricao = "Agência/Conta Corrente/DV Inválido".ToUpper() }; }
+                case "AH": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AH", Descricao = "Nº Seqüencial do Registro no Lote Inválido".ToUpper() }; }
+                case "AI": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AI", Descricao = "Código de Segmento de Detalhe Inválido".ToUpper() }; }
+                case "AJ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AJ", Descricao = "Tipo de Movimento Inválido".ToUpper() }; }
+                case "AK": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AK", Descricao = "Código da Câmara de Compensação do Banco Favorecido/Depositário Inválido".ToUpper() }; }
+                case "AL": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AL", Descricao = "Código do Banco Favorecido ou Depositário Inválido".ToUpper() }; }
+                case "AM": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AM", Descricao = "Agência Mantenedora da Conta Corrente do Favorecido Inválida".ToUpper() }; }
+                case "AN": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AN", Descricao = "Conta Corrente/DV do Favorecido Inválido".ToUpper() }; }
+                case "AO": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AO", Descricao = "Nome do Favorecido Não Informado".ToUpper() }; }
+                case "AP": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AP", Descricao = "Data Lançamento Inválido".ToUpper() }; }
+                case "AQ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AQ", Descricao = "Tipo/Quantidade da Moeda Inválido".ToUpper() }; }
+                case "AR": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AR", Descricao = "Valor do Lançamento Inválido".ToUpper() }; }
+                case "AS": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AS", Descricao = "Aviso ao Favorecido - Identificação Inválida".ToUpper() }; }
+                case "AT": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AT", Descricao = "Tipo/Número de Inscrição do Favorecido Inválido".ToUpper() }; }
+                case "AU": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AU", Descricao = "Logradouro do Favorecido Não Informado".ToUpper() }; }
+                case "AV": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AV", Descricao = "Nº do Local do Favorecido Não Informado ".ToUpper() }; }
+                case "AW": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AW", Descricao = "Cidade do Favorecido Não Informada".ToUpper() }; }
+                case "AX": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AX", Descricao = "CEP/Complemento do Favorecido Inválido".ToUpper() }; }
+                case "AY": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AY", Descricao = "Sigla do Estado do Favorecido Inválida".ToUpper() }; }
+                case "AZ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AZ", Descricao = "Código/Nome do Banco Depositário Inválido".ToUpper() }; }
+                case "BA": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BA", Descricao = "Código/Nome da Agência Depositária Não Informado".ToUpper() }; }
+                case "BB": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BB", Descricao = "Seu Número Inválido".ToUpper() }; }
+                case "BC": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BC", Descricao = "Nosso Número Inválido".ToUpper() }; }
+                case "BD": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BD", Descricao = "Inclusão Efetuada com Sucesso".ToUpper() }; }
+                case "BE": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BE", Descricao = "Alteração Efetuada com Sucesso".ToUpper() }; }
+                case "BF": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BF", Descricao = "Exclusão Efetuada com Sucesso".ToUpper() }; }
+                case "BG": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BG", Descricao = "Agência/Conta Impedida Legalmente".ToUpper() }; }
+                case "BH": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BH", Descricao = "Empresa não pagou salário".ToUpper() }; }
+                case "BI": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BI", Descricao = "Falecimento do mutuário".ToUpper() }; }
+                case "BJ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BJ", Descricao = "Empresa não enviou remessa do mutuário".ToUpper() }; }
+                case "BK": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BK", Descricao = "Empresa não enviou remessa no vencimento".ToUpper() }; }
+                case "BL": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BL", Descricao = "Valor da parcela inválida".ToUpper() }; }
+                case "BM": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BM", Descricao = "Identificação do contrato inválida".ToUpper() }; }
+                case "BN": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BN", Descricao = "Operação de Consignação Incluída com Sucesso".ToUpper() }; }
+                case "BO": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BO", Descricao = "Operação de Consignação Alterada com Sucesso".ToUpper() }; }
+                case "BP": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BP", Descricao = "Operação de Consignação Excluída com Sucesso".ToUpper() }; }
+                case "BQ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BQ", Descricao = "Operação de Consignação Liquidada com Sucesso".ToUpper() }; }
+                case "BR": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BR", Descricao = "Reativação Efetuada com Sucesso".ToUpper() }; }
+                case "BS": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BS", Descricao = "Suspensão Efetuada com Sucesso".ToUpper() }; }
+                case "CA": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CA", Descricao = "Código de Barras - Código do Banco Inválido".ToUpper() }; }
+                case "CB": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CB", Descricao = "Código de Barras - Código da Moeda Inválido".ToUpper() }; }
+                case "CC": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CC", Descricao = "Código de Barras - Dígito Verificador Geral Inválido".ToUpper() }; }
+                case "CD": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CD", Descricao = "Código de Barras - Valor do Título Inválido".ToUpper() }; }
+                case "CE": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CE", Descricao = "Código de Barras - Campo Livre Inválido".ToUpper() }; }
+                case "CF": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CF", Descricao = "Valor do Documento Inválido".ToUpper() }; }
+                case "CG": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CG", Descricao = "Valor do Abatimento Inválido".ToUpper() }; }
+                case "CH": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CH", Descricao = "Valor do Desconto Inválido".ToUpper() }; }
+                case "CI": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CI", Descricao = "Valor de Mora Inválido".ToUpper() }; }
+                case "CJ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CJ", Descricao = "Valor da Multa Inválido ".ToUpper() }; }
+                case "CK": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CK", Descricao = "Valor do IR Inválido".ToUpper() }; }
+                case "CL": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CL", Descricao = "Valor do ISS Inválido".ToUpper() }; }
+                case "CM": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CM", Descricao = "Valor do IOF Inválido".ToUpper() }; }
+                case "CN": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CN", Descricao = "Valor de Outras Deduções Inválido".ToUpper() }; }
+                case "CO": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CO", Descricao = "Valor de Outros Acréscimos Inválido".ToUpper() }; }
+                case "CP": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "CP", Descricao = "Valor do INSS Inválido".ToUpper() }; }
+                case "HA": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HA", Descricao = "Lote Não Aceito".ToUpper() }; }
+                case "HB": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HB", Descricao = "Inscrição da Empresa Inválida para o Contrato".ToUpper() }; }
+                case "HC": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HC", Descricao = "Convênio com a Empresa Inexistente/Inválido para o Contrato".ToUpper() }; }
+                case "HD": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HD", Descricao = "Agência/Conta Corrente da Empresa Inexistente/Inválido para o Contrato".ToUpper() }; }
+                case "HE": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HE", Descricao = "Tipo de Serviço Inválido para o Contrato".ToUpper() }; }
+                case "HF": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HF", Descricao = "Conta Corrente da Empresa com Saldo Insuficiente".ToUpper() }; }
+                case "HG": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HG", Descricao = "Lote de Serviço Fora de Seqüência".ToUpper() }; }
+                case "HH": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HH", Descricao = "Lote de Serviço Inválido".ToUpper() }; }
+                case "HI": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HI", Descricao = "Arquivo não aceito".ToUpper() }; }
+                case "HJ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HJ", Descricao = "Tipo de Registro Inválido".ToUpper() }; }
+                case "HK": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HK", Descricao = "Código Remessa / Retorno Inválido".ToUpper() }; }
+                case "HL": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HL", Descricao = "Versão de layout inválida".ToUpper() }; }
+                case "HM": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HM", Descricao = "Mutuário não identificado".ToUpper() }; }
+                case "HN": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HN", Descricao = "Tipo do beneficio não permite empréstimo".ToUpper() }; }
+                case "HO": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HO", Descricao = "Beneficio cessado/suspenso".ToUpper() }; }
+                case "HP": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HP", Descricao = "Beneficio possui representante legal".ToUpper() }; }
+                case "HQ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HQ", Descricao = "Beneficio é do tipo PA (Pensão alimentícia)".ToUpper() }; }
+                case "HR": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HR", Descricao = "Quantidade de contratos permitida excedida".ToUpper() }; }
+                case "HS": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HS", Descricao = "Beneficio não pertence ao Banco informado".ToUpper() }; }
+                case "HT": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HT", Descricao = "Início do desconto informado já ultrapassado".ToUpper() }; }
+                case "HU": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HU", Descricao = "Número da parcela inválida".ToUpper() }; }
+                case "HV": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HV", Descricao = "Quantidade de parcela inválida".ToUpper() }; }
+                case "HW": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HW", Descricao = "Margem consignável excedida para o mutuário dentro do prazo do contrato".ToUpper() }; }
+                case "HX": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HX", Descricao = "Empréstimo já cadastrado".ToUpper() }; }
+                case "HY": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HY", Descricao = "Empréstimo inexistente".ToUpper() }; }
+                case "HZ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "HZ", Descricao = "Empréstimo já encerrado".ToUpper() }; }
+                case "H1": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H1", Descricao = "Arquivo sem trailer ".ToUpper() }; }
+                case "H2": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H2", Descricao = "Mutuário sem crédito na competência".ToUpper() }; }
+                case "H3": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H3", Descricao = "Não descontado – outros motivos".ToUpper() }; }
+                case "H4": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H4", Descricao = "Retorno de Crédito não pago".ToUpper() }; }
+                case "H5": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H5", Descricao = "Cancelamento de empréstimo retroativo".ToUpper() }; }
+                case "H6": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H6", Descricao = "Outros Motivos de Glosa".ToUpper() }; }
+                case "H7": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H7", Descricao = "Margem consignável excedida para o mutuário acima do prazo do contrato".ToUpper() }; }
+                case "H8": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H8", Descricao = "Mutuário desligado do empregador".ToUpper() }; }
+                case "H9": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "H9", Descricao = "Mutuário afastado por licença".ToUpper() }; }
+                case "IA": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IA", Descricao = "Primeiro nome do mutuário diferente do primeiro nome do movimento do censo ou diferente da base de Titular do Benefício".ToUpper() }; }
+                case "IB": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IB", Descricao = "Benefício suspenso/cessado pela APS ou Sisobi".ToUpper() }; }
+                case "IC": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IC", Descricao = "Benefício suspenso por dependência de cálculo".ToUpper() }; }
+                case "ID": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ID", Descricao = "Benefício suspenso/cessado pela inspetoria/auditoria".ToUpper() }; }
+                case "IE": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IE", Descricao = "Benefício bloqueado para empréstimo pelo beneficiário".ToUpper() }; }
+                case "IF": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IF", Descricao = "Benefício bloqueado para empréstimo por TBM".ToUpper() }; }
+                case "IG": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IG", Descricao = "Benefício está em fase de concessão de PA ou desdobramento".ToUpper() }; }
+                case "IH": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IH", Descricao = "Benefício cessado por óbito".ToUpper() }; }
+                case "II": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "II", Descricao = "Benefício cessado por fraude".ToUpper() }; }
+                case "IJ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IJ", Descricao = "Benefício cessado por concessão de outro benefício".ToUpper() }; }
+                case "IK": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IK", Descricao = "Benefício cessado: estatutário transferido para órgão de origem".ToUpper() }; }
+                case "IL": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IL", Descricao = "Empréstimo suspenso pela APS".ToUpper() }; }
+                case "IM": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IM", Descricao = "Empréstimo cancelado pelo banco".ToUpper() }; }
+                case "IN": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IN", Descricao = "Crédito transformado em PAB".ToUpper() }; }
+                case "IO": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IO", Descricao = "Término da consignação foi alterado".ToUpper() }; }
+                case "IP": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IP", Descricao = "Fim do empréstimo ocorreu durante período de suspensão ou concessão".ToUpper() }; }
+                case "IQ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IQ", Descricao = "Empréstimo suspenso pelo banco".ToUpper() }; }
+                case "IR": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "IR", Descricao = "Não averbação de contrato – quantidade de parcelas/competências informadas ultrapassou a data limite da extinção de cota do dependente titular de benefícios".ToUpper() }; }
+                case "TA": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "TA", Descricao = "Lote Não Aceito - Totais do Lote com Diferença".ToUpper() }; }
+                case "YA": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "YA", Descricao = "Título Não Encontrado".ToUpper() }; }
+                case "YB": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "YB", Descricao = "Identificador Registro Opcional Inválido".ToUpper() }; }
+                case "YC": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "YC", Descricao = "Código Padrão Inválido".ToUpper() }; }
+                case "YD": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "YD", Descricao = "Código de Ocorrência Inválido".ToUpper() }; }
+                case "YE": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "YE", Descricao = "Complemento de Ocorrência Inválido".ToUpper() }; }
+                case "YF": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "YF", Descricao = "Alegação já Informada".ToUpper() }; }
+                case "ZA": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZA", Descricao = "Agência / Conta do Favorecido Substituída Observação: As ocorrências iniciadas com ZA tem caráter informativo para o cliente".ToUpper() }; }
+                case "ZB": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZB", Descricao = "Divergência entre o primeiro e último nome do beneficiário versus primeiro e último nome na Receita Federal".ToUpper() }; }
+                case "ZC": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZC", Descricao = "Confirmação de Antecipação de Valor".ToUpper() }; }
+                case "ZD": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZD", Descricao = "Antecipação parcial de valor".ToUpper() }; }
+                case "ZE": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZE", Descricao = "Título bloqueado na base".ToUpper() }; }
+                case "ZF": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZF", Descricao = "Sistema em contingência – título valor maior que referência".ToUpper() }; }
+                case "ZG": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZG", Descricao = "Sistema em contingência – título vencido".ToUpper() }; }
+                case "ZH": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZH", Descricao = "Sistema em contingência – título indexado".ToUpper() }; }
+                case "ZI": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZI", Descricao = "Beneficiário divergente".ToUpper() }; }
+                case "ZJ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZJ", Descricao = "Limite de pagamentos parciais excedido".ToUpper() }; }
+                case "ZK": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "ZK", Descricao = "Boleto já liquidado".ToUpper() }; }
             }
             throw new Exception(
                 String.Format(
@@ -1862,7 +2008,7 @@ namespace BoletoBr.Bancos.Brasil
             {
                 #region Instruções para COMANDO 01 - REGISTRO DE TÍTULO
 
-                    // Para Comando 01 - Registro de Título (posição 109-110)
+                // Para Comando 01 - Registro de Título (posição 109-110)
 
                 /* Instrução 00
                  * Se o COMANDO = 09 - Protestar, o Sistema de Cobrança do Banco assumirá o prazo de protesto de 5 (cinco) dias úteis
@@ -1917,7 +2063,7 @@ namespace BoletoBr.Bancos.Brasil
                             TextoInstrucao = "Protestar no 5º dia útil após o vencido."
                         };
                     }
-                    // Indica protesto com prazo de 6 a 29, 35 ou 40 dias corridos.
+                // Indica protesto com prazo de 6 a 29, 35 ou 40 dias corridos.
                 case EnumTipoInstrucao.ProtestarAposNDiasCorridos:
                     {
                         return new InstrucaoPadronizada()
@@ -1953,7 +2099,7 @@ namespace BoletoBr.Bancos.Brasil
 
                 #region Instruções para COMANDO 02 - SOLICITAÇÃO DE BAIXA
 
-                    // Para Comando 02 - Solicitação de Baixa (posição 109-110)
+                // Para Comando 02 - Solicitação de Baixa (posição 109-110)
 
                 case EnumTipoInstrucao.Devolver:
                     {
@@ -1986,7 +2132,7 @@ namespace BoletoBr.Bancos.Brasil
                         };
                     }
 
-                #endregion
+                    #endregion
 
             }
             throw new Exception(String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
@@ -2019,7 +2165,22 @@ namespace BoletoBr.Bancos.Brasil
 
             throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
         }
+        public RetornoGenericoPagamento LerArquivoRetornoPagamento(List<string> linhasArquivo)
+        {
+            if (linhasArquivo == null || linhasArquivo.Any() == false)
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
+            if (linhasArquivo.First().Length == 240)
+            {
+                var leitor = new LeitorRetornoPagamentoCnab240BancoDoBrasil(linhasArquivo);
+                var retornoProcessado = leitor.ProcessarRetorno();
+
+                var objRetornar = new RetornoGenericoPagamento(retornoProcessado);
+                return objRetornar;
+            }
+
+            throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
+        }
         public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
         {
             throw new NotImplementedException();

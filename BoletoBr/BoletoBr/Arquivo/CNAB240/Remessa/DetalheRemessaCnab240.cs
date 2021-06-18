@@ -17,6 +17,20 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             SegmentoY08 = new DetalheSegmentoY08RemessaCnab240();
         }
 
+        public DetalheRemessaCnab240(Pagamento pagamento, int numeroRegistroNoLote)
+        {
+            if (string.IsNullOrEmpty(pagamento.CodBarras))
+            {
+                SegmentoA = new DetalheSegmentoARemessaCnab240(pagamento, numeroRegistroNoLote);
+                SegmentoB = new DetalheSegmentoBRemessaCnab240(pagamento, numeroRegistroNoLote);
+            }
+            else
+            {
+                SegmentoJ = new DetalheSegmentoJRemessaCnab240(pagamento, numeroRegistroNoLote);
+            }
+
+        }
+
         public DetalheRemessaCnab240(DetalheSegmentoPRemessaCnab240 segmentoP)
         {
             SegmentoP = segmentoP;
@@ -67,6 +81,10 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public DetalheSegmentoYRemessaCnab240 SegmentoY { get; set; }
 
         public DetalheSegmentoY08RemessaCnab240 SegmentoY08 { get; set; }
+
+        public DetalheSegmentoARemessaCnab240 SegmentoA { get; set; }
+        public DetalheSegmentoBRemessaCnab240 SegmentoB { get; set; }
+        public DetalheSegmentoJRemessaCnab240 SegmentoJ { get; set; }
 
         #endregion
     }

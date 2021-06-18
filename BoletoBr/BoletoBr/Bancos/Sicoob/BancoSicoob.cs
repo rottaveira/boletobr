@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq; 
 
 namespace BoletoBr.Bancos.Sicoob
 {
@@ -768,6 +766,40 @@ namespace BoletoBr.Bancos.Sicoob
                 default:
                     return 3;
             }
+        }
+
+        public RetornoGenericoPagamento LerArquivoRetornoPagamento(List<string> linhasArquivo)
+        {
+            if (linhasArquivo == null || linhasArquivo.Any() == false)
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
+
+            if (linhasArquivo.First().Length == 240)
+            {
+                var leitor = new LeitorRetornoPagamentoCnab240Sicoob(linhasArquivo);
+                var retornoProcessado = leitor.ProcessarRetorno();
+
+                var objRetornar = new RetornoGenericoPagamento(retornoProcessado);
+                return objRetornar;
+            }
+
+            throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaPagamento(string numeroOcorrencia)
+        {
+            switch (numeroOcorrencia)
+            {
+                case "00": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "00", Descricao = "Pagamento confirmado".ToUpper() }; }
+                case "AJ": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "AJ", Descricao = "Tipo de Movimento Inválido / Erro CNAB".ToUpper() }; }
+                case "BD": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BD", Descricao = "Inclusão Efetuada com Sucesso".ToUpper() }; }
+                case "BF": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "BF", Descricao = "Transação Rejeitada".ToUpper() }; }
+                case "PD": { return new CodigoOcorrencia(numeroOcorrencia) { CodigoText = "PD", Descricao = "Transação Pendente de Assinatura".ToUpper() }; }
+  
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, numeroOcorrencia.ToString()));
         }
     }
 }

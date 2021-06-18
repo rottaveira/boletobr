@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using BoletoBr.Arquivo;
-using BoletoBr.Bancos;
-using BoletoBr.Dominio;
-using BoletoBr.Dominio.Instrucao;
+﻿using System; 
+using System.Collections.Generic; 
+using BoletoBr.Arquivo; 
+using BoletoBr.Dominio; 
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
 

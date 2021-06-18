@@ -130,5 +130,94 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             Assert.IsTrue(linhasEscrever[4].Length == 240 && linhasEscrever[4] == "75600015         00000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                             ");
             Assert.IsTrue(linhasEscrever[5].Length == 240 && linhasEscrever[5] == "75699999         000001000001000000                                                                                                                                                                                                             ");
         }
+
+
+        [TestMethod]
+        public void TestGerarRemessaPagamento()
+        {
+            var contaBancariaCedente = new ContaBancaria("3249", "2", "7341", "5");
+            var empresaPagadora = new Cedente("999999", "123456", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
+            empresaPagadora.EnderecoCedente = new Endereco()
+            {
+                Bairro = "Jardins",
+                Cep = "75690000",
+                Cidade = "Goiabalândia",
+                Complemento = "EDF EXECUTIVO",
+                Logradouro = "Rua x",
+                Numero = "25",
+                SiglaUf = "GO",
+            };
+
+            var objEndereco = new Endereco()
+            {
+                Bairro = "Trenzim",
+                Cep = "75690000",
+                Cidade = "Mangalandia",
+                Complemento = "Galho esquerdo",
+                Logradouro = "Rua 3",
+                Numero = "5",
+                SiglaUf = "GO",
+            };
+            var contaBancariaFavorecido = new BoletoBr.ContaBancaria("4343", "0", "35432", "2");
+            var favorecido = new BoletoBr.Sacado("012.365.489-01", "1", objEndereco, contaBancariaFavorecido);
+            favorecido.Nome = "RAFAEL TAVEIRA";
+
+            var bancoEmpresa = BancoFactory.ObterBanco("756", "0");
+            var bancoFavorecido = BancoFactory.ObterBanco("237", "");
+
+            var pagamento = new BoletoBr.Pagamento()
+            {
+                BancoEmpresa = bancoEmpresa,
+                BancoFavorecido = bancoFavorecido,
+                CodigoBanco = bancoEmpresa.CodigoBanco,
+                CodigoBancoFavorecido = bancoFavorecido.CodigoBanco,
+                CodigoCamaraCentralizadora = "018",
+                CodigoFinalidadeDoc = "",
+                CodigoFinalidadeTed = "5",
+                FinalidadePagamento = "CC",
+                DataVencimento = new DateTime(2021, 4, 21),
+                Empresa = empresaPagadora,
+                Favorecido = favorecido,
+                ValorPagamento = 5M, 
+                ValorDesconto = 0,
+                ValorJurosMora = 0,
+                ValorMulta = 0,
+                CodigoConvenio = "7980171",
+                SeuNumero = "1015",
+                TipoServico = "0",
+                FormaDePagamento = "01",
+                FormaDeLancamento = "03",
+
+                ValorTitulo = 5M,
+                CodBarras = "24691859100000299845004110028796200000000150"
+            };
+
+            var remessa = new RemessaCnab240
+            {
+                Header = new HeaderRemessaCnab240(pagamento, 1)
+            };
+
+            var loteRemessa = new LoteRemessaCnab240
+            {
+                HeaderLote = new HeaderLoteRemessaCnab240(pagamento, 1),
+                TrailerLote = new TrailerLoteRemessaCnab240(4)
+            };
+
+            remessa.Trailer = new TrailerRemessaCnab240(1, 6);
+
+            var escritor = EscritorArquivoRemessaFactory.ObterEscritorRemessaPagamento(remessa);
+            var listaBoletoBrRemessa = new List<Pagamento>() { pagamento };
+            var fabricaRemessa = new RemessaFactory();
+            var remessaPronta = fabricaRemessa.GerarRemessa(remessa.Header, loteRemessa.HeaderLote, listaBoletoBrRemessa, loteRemessa.TrailerLote, remessa.Trailer);
+            var linhasEscrever = escritor.EscreverTexto(remessaPronta);
+
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var linha in linhasEscrever)
+            {
+                sb.AppendLine(linha);
+            }
+
+        }
     }
 }

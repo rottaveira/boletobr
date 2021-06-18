@@ -667,5 +667,45 @@ namespace BoletoBr.UnitTests.TestsBancos
         }
 
         #endregion
+
+        #region Carteira 16
+
+        [TestMethod]
+        public void FormatarNossoNumeroCarteira16Bradesco()
+        {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+            var banco = Fabricas.BancoFactory.ObterBanco("237", "2");
+            var contaBancariaCedente = new ContaBancaria("2374", "4", "0165199", "4");
+            var cedente = new Cedente("9999999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var carteira = new CarteiraCobranca { Codigo = "16" };
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "41636135592",
+                ValorBoleto = Convert.ToDecimal(221.40),
+                IdentificadorInternoBoleto = "41636135592",
+                DataVencimento = new DateTime(2014, 07, 10),
+                Moeda = "9"
+            };
+
+            banco.FormatarBoleto(boleto);
+
+            Assert.AreEqual("16/41636135592-P", boleto.NossoNumeroFormatado);
+        }
+
+        #endregion
     }
 }

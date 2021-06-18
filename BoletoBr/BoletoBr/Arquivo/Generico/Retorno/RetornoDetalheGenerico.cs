@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Arquivo.Generico.Retorno
@@ -45,6 +46,18 @@ namespace BoletoBr.Arquivo.Generico.Retorno
 
         #endregion
 
+        #region Segmento A
+        public string NomeFavorecido { get; set; }
+        public DateTime DataEfetivacaoPagamento { get; set; }
+        public decimal ValorPagamento { get; set; }
+        public decimal ValorRealEfetivacaoPagamento { get; set; }
+        #endregion
+
+        #region Segmento B
+
+        #endregion
+
+
         #endregion
 
         #region CNAB400
@@ -65,7 +78,9 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorLancamento { get; set; }
         public decimal ValorJuros { get; set; }
         public decimal ValorMulta { get; set; }
+        public decimal TaxaBoleto { get; set; }
         public string SeuNumero { get; set; }
+        public string CodigoBanco { get; set; }
 
         #endregion
 
@@ -83,14 +98,23 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         /// -> etc.
         /// </summary>
         public string StatusProcessamentoRegistro { get; set; }
-        public int NumeroConvenio { get; set; }
+        public string NumeroConvenio { get; set; }
         #endregion
 
         public bool Pago
         {
             get
             {
+                #region Sicredi
+                var ocorrenciasValidas = new List<string>() { "02", "06" };
+                if (CodigoBanco == "748" && !ocorrenciasValidas.Contains(CodigoOcorrencia))
+                    return false;
+                #endregion
+
                 if (ValorRecebido > 0 && DataCredito.HasValue && DataCredito.Value > DateTime.MinValue)
+                    return true;
+
+                if (ValorRealEfetivacaoPagamento > 0 && DataEfetivacaoPagamento > DateTime.MinValue)
                     return true;
 
                 return false;

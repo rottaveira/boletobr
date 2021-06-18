@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
@@ -18,6 +17,45 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
 
             this.NumeroContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
             this.DigitoContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
+            this.CodigoConvenio = boleto.CedenteBoleto.Convenio;
+        }
+
+        public HeaderRemessaCnab240(Pagamento pagamento, int sequencialArquivo)
+        {
+            var banco = Fabricas.BancoFactory.ObterBanco(pagamento.CodigoBanco); 
+            this.CodigoBanco = pagamento.CodigoBanco;
+            this.NumeroInscricao = pagamento.Empresa.CpfCnpj;
+            this.AgenciaMantenedora = pagamento.Empresa.ContaBancariaCedente.Agencia;
+            this.NomeBanco = banco.NomeBanco;
+            this.DigitoAgenciaMantenedora = pagamento.Empresa.ContaBancariaCedente.DigitoAgencia;
+            this.CodigoCedente = pagamento.Empresa.CodigoCedente;
+            this.DigitoCedente = pagamento.Empresa.DigitoCedente;
+            this.NomeEmpresa = pagamento.Empresa.Nome;
+            this.SequencialNsa = sequencialArquivo;
+
+            this.NumeroContaCorrente = pagamento.Empresa.ContaBancariaCedente.Conta;
+            this.DigitoContaCorrente = pagamento.Empresa.ContaBancariaCedente.DigitoConta;
+            this.CodigoConvenio = pagamento.CodigoConvenio;
+        }
+
+        public HeaderRemessaCnab240(Pagamento pagamento, int sequencialArquivo, bool teste)
+        {
+            var banco = Fabricas.BancoFactory.ObterBanco(pagamento.CodigoBanco);
+            this.CodigoBanco = pagamento.CodigoBanco;
+            this.NumeroInscricao = pagamento.Empresa.CpfCnpj;
+            this.AgenciaMantenedora = pagamento.Empresa.ContaBancariaCedente.Agencia;
+            this.NomeBanco = banco.NomeBanco;
+            this.DigitoAgenciaMantenedora = pagamento.Empresa.ContaBancariaCedente.DigitoAgencia;
+            this.CodigoCedente = pagamento.Empresa.CodigoCedente;
+            this.DigitoCedente = pagamento.Empresa.DigitoCedente;
+            this.NomeEmpresa = pagamento.Empresa.Nome;
+            this.SequencialNsa = sequencialArquivo;
+
+            this.NumeroContaCorrente = pagamento.Empresa.ContaBancariaCedente.Conta;
+            this.DigitoContaCorrente = pagamento.Empresa.ContaBancariaCedente.DigitoConta;
+            this.CodigoConvenio = pagamento.CodigoConvenio;
+
+            this.Teste = teste && pagamento.CodigoBanco == "001" ? "TS" : string.Empty; /*Banco Brasil*/
         }
 
         public string DigitoContaCorrente { get; set; }
@@ -44,5 +82,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public string ReservadoBanco { get; set; }
         public string ReservadoEmpresa { get; set; }
         public string VersaoAplicativo { get; set; }
+        public string CodigoConvenio { get; set; }
+        public string Teste{ get; set; }
     }
 }

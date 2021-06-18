@@ -32,7 +32,7 @@ namespace BoletoBr
             }
             digito = ((10 - (soma % 10)) % 10);
             return digito;
-        }
+        } 
 
         public static int Mod11(string seq)
         {
@@ -88,9 +88,36 @@ namespace BoletoBr
 
         }
 
-        public static int Mod11BanrisulPeso7(string seq)
+        public static int digSicredi(string seq)
         {
-            int digito;
+            /* Variáveis
+             * -------------
+             * d - Dígito
+             * s - Soma
+             * p - Peso
+             * b - Base
+             * r - Resto
+             */
+
+            int d, s = 0, p = 2, b = 9;
+
+            for (int i = seq.Length - 1; i >= 0; i--)
+            {
+                s = s + (Convert.ToInt32(seq.Substring(i, 1)) * p);
+                if (p < b)
+                    p = p + 1;
+                else
+                    p = 2;
+            }
+
+            d = 11 - (s % 11);
+            if (d > 9)
+                d = 0;
+            return d;
+        }
+
+        public static int RestoMod11BanrisulPeso7(string seq)
+        {
             int soma = 0;
             int peso = 2;
 
@@ -102,32 +129,51 @@ namespace BoletoBr
                 else
                     peso = peso + 1;
             }
-            digito = 11 - (soma < 11 ? soma : soma % 11);
-            return digito;
+
+            var resto = (soma < 11 ? soma : soma % 11);
+
+            return resto;
         }
 
         public static int DigitoVerificadorBanrisulNC(string seq, int? digitoNAdd = null )
         {
             int digitoN;
+            int restoC;
             int digitoC;
-            int soma = 0;
-            int peso = 2;
+
+            #region Digito N
+
             if (digitoNAdd == null)
                 digitoN = Mod10(seq);
             else
                 digitoN = digitoNAdd.GetValueOrDefault();
-            digitoC = Mod11BanrisulPeso7($@"{seq}{digitoN}");
 
-            if (digitoC == 11)
-                digitoC = 0;
+            #endregion
 
-            if (digitoC > 9 || digitoC == 1)
+            #region Digito C
+
+            // Obtem o resto
+            restoC = RestoMod11BanrisulPeso7($@"{seq}{digitoN}");
+
+            if(restoC == 0 || restoC == 11)
             {
-                digitoN++;
-                digitoC = DigitoVerificadorBanrisulNC(seq, (digitoN > 9 ? 0 : digitoN));
-                return digitoC;
+                digitoC = 0;
             }
-            
+
+            else if (restoC == 1)
+            {
+                return DigitoVerificadorBanrisulNC(seq, 
+                    digitoN == 9 
+                        ? 0 
+                        : digitoN + 1);
+            }
+
+            else
+            {
+                digitoC = (11 - restoC);
+            }
+
+            #endregion           
 
             var ret = $@"{digitoN}{digitoC}";
             return Convert.ToInt32(ret);
@@ -374,7 +420,7 @@ namespace BoletoBr
             return result;
         }
 
-        public static string Mod11Base7Bradesco(string seq, int b)
+        public static string Mod11Base7Bradesco(string seq, int b, string codigoCarteira = "")
         {
             #region Trecho do manual layout_cobranca_port.pdf do BRADESCO
             /* 
@@ -424,6 +470,8 @@ namespace BoletoBr
             if (r == 0)
                 return "0";
             else if (r == 1)
+                return "P";
+            else if (!string.IsNullOrEmpty(codigoCarteira) && codigoCarteira.Equals("16") && r == 10)
                 return "P";
             else
                 return (11 - r).ToString();
@@ -711,6 +759,44 @@ namespace BoletoBr
                 dateBase = dataParaCalculo.AddDays(-(((DateDiff(DateInterval.Day, dateBase, dataParaCalculo) - 9999) - 1) + 1000));
 
             return DateDiff(DateInterval.Day, dateBase, dataParaCalculo);
+        }
+
+        public static int Mod10Sicredi(string seq)
+        {
+            /* Variáveis
+             * -------------
+             * d - Dígito
+             * s - Soma
+             * p - Peso
+             * b - Base
+             * r - Resto
+             */
+
+            int d, s = 0, p = 2, b = 2, r;
+
+            for (int i = seq.Length - 1; i >= 0; i--)
+            {
+
+                r = (Convert.ToInt32(seq.Substring(i, 1)) * p);
+                if (r > 9)
+                    r = SomaDezena(r);
+                s = s + r;
+                if (p < b)
+                    p++;
+                else
+                    p--;
+            }
+
+            d = Multiplo10(s);
+            return d;
+        }
+
+        public static int SomaDezena(int dezena)
+        {
+            string d = dezena.ToString();
+            int d1 = Convert.ToInt32(d.Substring(0, 1));
+            int d2 = Convert.ToInt32(d.Substring(1));
+            return d1 + d2;
         }
         #endregion
 

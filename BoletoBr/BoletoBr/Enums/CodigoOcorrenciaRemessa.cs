@@ -140,6 +140,11 @@ namespace BoletoBr.Enums
         AlteracaoDoUsoDaEmpresa,
         AlterarDadosSacado,
         AlterarDadosSacadorAvalista,
+        #endregion  
+        
+        #region CÓDIGO DE MOVIMENTO REMESSA - 246|ABC
+        AlteracaoValorMinimoPercentual,
+        AlteracaoValorMaximoPercentual, 
         #endregion
 
     }

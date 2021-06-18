@@ -14,5 +14,13 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public int TipoRegistro { get; set; }
         public int QtdLotesArquivo { get; set; }
         public int QtdRegistrosArquivo { get; set; }
+
+        /// <summary>
+        /// Quantidade de Contas para Conciliação (Lotes)
+        /// Número indicativo de lotes de Conciliação Bancária enviados no arquivo.Somatória dos registros de tipo 1 
+        /// e Tipo de Operação = 'E'.
+        /// Campo específico para o serviço de Conciliação Bancária.
+        /// </summary>
+        public int QtdContasConciliacao { get; set; }
     }
 }

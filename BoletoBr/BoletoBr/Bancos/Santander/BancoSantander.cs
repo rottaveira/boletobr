@@ -1177,5 +1177,15 @@ namespace BoletoBr.Bancos.Santander
                 codProtesto = 7;
             return codProtesto;
         }
+
+        public RetornoGenericoPagamento LerArquivoRetornoPagamento(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaPagamento(string numeroOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Dominio;
@@ -13,7 +11,6 @@ using BoletoBr.Enums;
 using BoletoBr.Fabricas;
 using BoletoBr.View.Win.Dominio;
 using BoletoBr.View.XtraReport;
-using DevExpress.Utils.NonclientArea;
 
 namespace BoletoBr.View.Win
 {
@@ -98,7 +95,7 @@ namespace BoletoBr.View.Win
             boleto.Aceite = "N";
             boleto.DataProcessamento = DateTime.Now;
             boleto.CarteiraCobranca = new CarteiraCobranca();
-            
+
             #region Dados Carteira 
 
             var numeroCarteira = carteiraBoleto.NumeroCarteira;
@@ -219,6 +216,75 @@ namespace BoletoBr.View.Win
 
             return boleto;
         }
+        private static BoletoBr.Pagamento TransformaDeFormatoPagamentoParaFormatoBoletoBr(CarteiraBoleto carteiraBoleto,
+            SacadoBoleto sacado, decimal valor, DateTime dataVencimento, string numeroDocumento)
+        {
+            var vencimento = dataVencimento;
+            var valorPagamento = valor;
+            var nroConvenio = carteiraBoleto.NumeroConvenio;
+            var identificadorInternoDocumento = numeroDocumento;
+
+            #region Dados Cedente
+
+            var codigoCedente = carteiraBoleto.CodigoCedente.BoletoBrToStringSafe();
+            var digitoCedente = carteiraBoleto.DigitoCodigoCedente.BoletoBrToInt();
+            var codTransmissao = carteiraBoleto.CodigoTransmissao.BoletoBrToStringSafe();
+            var cpfcnpjcedente = carteiraBoleto.CpfCnpjCedente.BoletoBrToStringSafe();
+            var descricaocedente = carteiraBoleto.NomeCedente.BoletoBrToStringSafe();
+
+            var agencia = carteiraBoleto.NumeroAgencia;
+            var digitoAgencia = carteiraBoleto.DigitoAgencia;
+            var conta = carteiraBoleto.NumeroConta;
+            var digitoConta = carteiraBoleto.DigitoConta;
+
+            var enderecoCedente = carteiraBoleto.EnderecoCedente;
+            var bairroCedente = carteiraBoleto.BairroCedente;
+            var complementoEndCedente = carteiraBoleto.ComplementoCedente;
+            var numeroEnderecoCedente = carteiraBoleto.NumeroCedente;
+            var cepCedente = carteiraBoleto.CepCedente;
+            var cidadeCedente = carteiraBoleto.CidadeCedente;
+            var ufEnderecoCedente = carteiraBoleto.UfCedente;
+
+            var contaBancariaCedente = new BoletoBr.ContaBancaria(agencia, digitoAgencia, conta, digitoConta);
+            var cedente = new BoletoBr.Cedente(codigoCedente, nroConvenio, digitoCedente, cpfcnpjcedente,
+                descricaocedente, contaBancariaCedente, new Endereco()
+                {
+                    Bairro = bairroCedente,
+                    Cep = cepCedente,
+                    Cidade = cidadeCedente,
+                    Complemento = complementoEndCedente,
+                    Logradouro = enderecoCedente,
+                    Numero = numeroEnderecoCedente,
+                    SiglaUf = ufEnderecoCedente,
+                });
+
+            #endregion
+
+            var codBanco = carteiraBoleto.CodigoBanco.PadLeft(3, '0');
+
+            var pagamento = new BoletoBr.Pagamento();
+            var objBanco = BoletoBr.Fabricas.BancoFactory.ObterBanco(codBanco);
+
+            #region Dados Sacado
+
+            var cpfcnpjSacado = sacado.CpfCnpj;
+            var nomeSacado = sacado.Nome;
+
+            pagamento.Favorecido = new BoletoBr.Sacado(nomeSacado, cpfcnpjSacado,
+                TransformaEnderecoParaEnderecoBoletoBr(sacado));
+
+            #endregion
+
+            /* Ajuste */
+            pagamento.DataVencimento = vencimento;
+            pagamento.Empresa = cedente; 
+
+            pagamento.ValorPagamento = valorPagamento;
+            pagamento.ValorJurosMora = carteiraBoleto.ValorJuros;
+            pagamento.ValorMulta = carteiraBoleto.ValorMulta;
+
+            return pagamento;
+        }
 
         private static BoletoBr.Endereco TransformaEnderecoParaEnderecoBoletoBr(SacadoBoleto sacadoBoleto)
         {
@@ -311,11 +377,11 @@ namespace BoletoBr.View.Win
                 if (boletoPadrao.BancoBoleto.CodigoBanco == "237")
                     nomeArquivo = $"{"CB"}{dataBradesco}{"TS"}{".REM"}";
                 else
-                /*
-                        * C -> Cobrança
-                        * Data da geração em formato DDMMAA
-                        * G -> Geral
-                    */
+                    /*
+                            * C -> Cobrança
+                            * Data da geração em formato DDMMAA
+                            * G -> Geral
+                        */
                     nomeArquivo = $"{"C"}{data}{"G"}{".REM"}";
 
                 var dir = Directory.CreateDirectory(Path.Combine(
@@ -332,7 +398,7 @@ namespace BoletoBr.View.Win
                  * Cada arquivo enviado a CAIXA deverá conter um número único.
                  */
                 // TODO: Criar tabela para controlar quantidade de arquivos remessa enviados ao banco.
-                const int sequencialArquivo = 1;
+                //const int sequencialArquivo = 1;
 
                 /* Usado no Header de Lote
                 * Para cada remessa enviada deverá ser acrescido em 1, se a remessa for recusada a numeração não poderá ser aproveitada.
@@ -352,7 +418,7 @@ namespace BoletoBr.View.Win
                 const int qtdLotesArquivo = 1;
 
                 // Conta a quantidade de itens na lista  multiplica por 2 ( cada boleto terá um detalhe segmento P e um detalhe segmento Q ) e adiciona + 4 (Header do Arquivo, Header do Lote, Trailer do Lote e Trailer do Arquivo)
-                var qtdRegistrosNoArquivoCnab240 = (listaBoletoBrRemessa.Count*2) + 4;
+                var qtdRegistrosNoArquivoCnab240 = (listaBoletoBrRemessa.Count * 2) + 4;
 
                 // Conta a quantidade de itens na lista e adiciona + 2 (Header do Arquivo + Trailer do Arquivo)
                 var qtdRegistrosNoArquivoCnab400 = listaBoletoBrRemessa.Count();
@@ -468,6 +534,143 @@ namespace BoletoBr.View.Win
                     else
                         File.WriteAllLines(caminho, linhasTratadasEscrever);
                 }
+
+                #endregion
+
+                return caminho;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static string GerarArquivoRemessaPagamento(CarteiraBoleto carteiraBoleto, SacadoBoleto sacado, decimal valor,
+            DateTime dataVencimento, string numeroDocumento)
+        {
+            try
+            {
+                var listaBoletoBrRemessa = new List<Pagamento>();
+                var sequenciaRemessaCarteiraBoleto = 1;
+
+                try
+                {
+                    // Transforma boletos e adiciona lançamentos na lista
+                    listaBoletoBrRemessa.Add(TransformaDeFormatoPagamentoParaFormatoBoletoBr(carteiraBoleto, sacado,
+                        valor, dataVencimento, numeroDocumento));
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+                #region Validações (Banco e Carteira)
+
+                /* Garantir que todos os boletos pertencem a mesmo banco e carteira de boleto */
+                var bancosEncontrados = listaBoletoBrRemessa.GroupBy(gb => gb.BancoEmpresa.CodigoBanco);
+                if (bancosEncontrados.Count() > 1)
+                    throw new Exception(
+                        "Há mais de 1 banco associado aos boletos que foram informados para geração de remessa.");
+ 
+
+                if (listaBoletoBrRemessa.Any(qry => qry.DataVencimento  < DateTime.Now.Date))
+                    throw new Exception(
+                        "Há boletos com data de vencimento menor que a data atual. Impossível continuar.");
+
+                #endregion
+
+                var boletoPadrao = listaBoletoBrRemessa.First();
+
+                var fabricaRemessa = new RemessaFactory();
+
+                #region #Criação do Diretório e Arquivo.REM
+
+                var data = $"{DateTime.Now.ToString("ddMMyy")}";
+                var dataBradesco = $"{DateTime.Now.ToString("ddMM")}";
+                string nomeArquivo = null;
+
+                // Se for BRADESCO formata nome do arquivo para CBDDMM??.REM
+                if (boletoPadrao.CodigoBanco == "237")
+                    nomeArquivo = $"{"CB"}{dataBradesco}{"TS"}{".REM"}";
+                else
+                    /*
+                            * C -> Cobrança
+                            * Data da geração em formato DDMMAA
+                            * G -> Geral
+                        */
+                    nomeArquivo = $"{"C"}{data}{"G"}{".REM"}";
+
+                var dir = Directory.CreateDirectory(Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    boletoPadrao.CodigoBanco));
+
+                var caminho = dir.FullName + "\\" + nomeArquivo;
+
+                #endregion
+
+                #region #Informações Essenciais
+
+                /* Usado no Header do Arquivo
+                 * Cada arquivo enviado a CAIXA deverá conter um número único.
+                 */
+                // TODO: Criar tabela para controlar quantidade de arquivos remessa enviados ao banco.
+                //const int sequencialArquivo = 1;
+
+                /* Usado no Header de Lote
+                * Para cada remessa enviada deverá ser acrescido em 1, se a remessa for recusada a numeração não poderá ser aproveitada.
+                */
+                // TODO: Criar tabela para controlar quantidade de arquivos remessa gerados.
+                int sequencialRemessa = sequenciaRemessaCarteiraBoleto;
+
+                /* Usado no Trailer de Lote
+                * Conta a quantidade de itens na lista multiplica por 2 ( cada boleto terá um detalhe segmento P e um detalhe segmento Q ) e adiciona + 2 (Header do Lote e Trailer do Lote)
+                */
+                // TODO: Atualmente só considera 1 lote de informações no arquivo.
+                var qtdSegmantos = carteiraBoleto.ValorMulta > 0 && carteiraBoleto.BancoGeraBoleto ? 3 : 2;
+                var qtdRegistrosNoLote = (listaBoletoBrRemessa.Count * qtdSegmantos) + 2;
+
+                /* Usado no Trailer do Arquivo */
+                // TODO: Atualmente só gera 1 lote de informações no arquivo.
+                const int qtdLotesArquivo = 1;
+
+                // Conta a quantidade de itens na lista  multiplica por 2 ( cada boleto terá um detalhe segmento P e um detalhe segmento Q ) e adiciona + 4 (Header do Arquivo, Header do Lote, Trailer do Lote e Trailer do Arquivo)
+                var qtdRegistrosNoArquivoCnab240 = (listaBoletoBrRemessa.Count * 2) + 4;
+
+                // Conta a quantidade de itens na lista e adiciona + 2 (Header do Arquivo + Trailer do Arquivo)
+                var qtdRegistrosNoArquivoCnab400 = listaBoletoBrRemessa.Count();
+                qtdRegistrosNoArquivoCnab400 += 2;
+
+                Pagamento primeiroPagamentoDaLista = listaBoletoBrRemessa.First();
+
+                #endregion
+
+                #region CNAB240
+
+                // Gera Remessa Cnab240
+
+                var remessa = new RemessaCnab240
+                {
+                    Header = new HeaderRemessaCnab240(primeiroPagamentoDaLista, sequencialRemessa)
+                };
+
+                var loteRemessa = new LoteRemessaCnab240
+                {
+                    HeaderLote = new HeaderLoteRemessaCnab240(primeiroPagamentoDaLista, sequencialRemessa),
+                    TrailerLote = new TrailerLoteRemessaCnab240(qtdRegistrosNoLote)
+                };
+
+                remessa.Trailer = new TrailerRemessaCnab240(qtdLotesArquivo, qtdRegistrosNoArquivoCnab240);
+
+                var escritor = EscritorArquivoRemessaFactory.ObterEscritorRemessa(remessa);
+
+                var remessaPronta = fabricaRemessa.GerarRemessa(remessa.Header, loteRemessa.HeaderLote,
+                    listaBoletoBrRemessa, loteRemessa.TrailerLote, remessa.Trailer);
+
+                var linhasEscrever = escritor.EscreverTexto(remessaPronta);
+
+                // Escreve em UTF-8
+                File.WriteAllLines(caminho, linhasEscrever.ToArray(), Encoding.GetEncoding(1252));
+
 
                 #endregion
 

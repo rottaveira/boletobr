@@ -33,6 +33,10 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.CodigoDeTransmissao = boleto.CodigoDeTransmissao;
 
             #endregion
+
+            #region #748 | SICREDI
+            this.CpfCnpjCedente = boleto.CedenteBoleto.CpfCnpj;
+            #endregion
         }
 
         public string CodigoBanco { get; set; }
@@ -67,6 +71,10 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 
         #region #041|BANRISUL
         public string CodigoClienteOfficeBanking { get; set; }
+        #endregion
+
+        #region #748 | SICREDI
+        public string CpfCnpjCedente { get; set; }
         #endregion
     }
 }

@@ -121,7 +121,7 @@ namespace BoletoBr.Bancos.Sicoob
             objRetornar.DvAgenciaCedente = linha.ExtrairValorDaLinha(22, 22);
             objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(23, 30);
             objRetornar.DacAgenciaConta = linha.ExtrairValorDaLinha(31, 31).BoletoBrToInt();
-            objRetornar.NumeroConvenio = linha.ExtrairValorDaLinha(32, 37).BoletoBrToInt();
+            objRetornar.NumeroConvenio = linha.ExtrairValorDaLinha(32, 37).BoletoBrToInt().BoletoBrToStringSafe();
             objRetornar.NumeroControle = linha.ExtrairValorDaLinha(38, 62);
 
             objRetornar.NossoNumero = linha.ExtrairValorDaLinha(63, 73);

@@ -81,8 +81,8 @@ namespace BoletoBr.Bancos.Cef
                 header = header.PreencherValorNaLinha(53, 57,
                     infoHeader.AgenciaMantenedora.PadLeft(5, '0'));
                 header = header.PreencherValorNaLinha(58, 58, infoHeader.DigitoAgenciaMantenedora);
-                header = header.PreencherValorNaLinha(59, 64, infoHeader.CodigoCedente.PadLeft(6, '0'));
-                header = header.PreencherValorNaLinha(65, 71, string.Empty.PadLeft(7, '0'));
+                header = header.PreencherValorNaLinha(59, 65, infoHeader.CodigoCedente.PadRight(7, '0'));
+                header = header.PreencherValorNaLinha(66, 71, string.Empty.PadLeft(6, '0'));
                 header = header.PreencherValorNaLinha(72, 72, "0");
                 header = header.PreencherValorNaLinha(73, 102, nomeCedente.PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(103, 132, "CAIXA ECONOMICA FEDERAL".PadRight(30, ' '));
@@ -106,7 +106,10 @@ namespace BoletoBr.Bancos.Cef
                 header = header.PreencherValorNaLinha(144, 151, DateTime.Now.ToString("ddMMyyyy"));
                 header = header.PreencherValorNaLinha(152, 157, DateTime.Now.ToString("HHmmss"));
                 header = header.PreencherValorNaLinha(158, 163, infoHeader.SequencialNsa.ToString().PadLeft(6, '0'));
-                header = header.PreencherValorNaLinha(164, 166, "050");
+
+                var versaoLayout = infoHeader.CodigoCedente.Length == 7 ? "107" : "101";
+
+                header = header.PreencherValorNaLinha(164, 166, versaoLayout);
                 header = header.PreencherValorNaLinha(167, 171, string.Empty.PadLeft(5, '0'));
                 header = header.PreencherValorNaLinha(172, 191, string.Empty.PadRight(20, ' '));
                 header = header.PreencherValorNaLinha(192, 211, "REMESSA-PRODUCAO".PadRight(20, ' '));
@@ -170,18 +173,21 @@ namespace BoletoBr.Bancos.Cef
                 */
                 headerLote = headerLote.PreencherValorNaLinha(10, 11, infoHeaderLote.TipoRegistro.ToString("n0").PadLeft(2,'0')); // Tipo de Serviço
                 headerLote = headerLote.PreencherValorNaLinha(12, 13, "00"); // Uso Exclusivo FREBRABAN/CNAB
-                headerLote = headerLote.PreencherValorNaLinha(14, 16, "030"); // Nº da versão do Layout do Lote
+
+                var layoutArquivo = infoHeaderLote.CodigoCedente.Length == 7 ? "067" : "060";
+
+                headerLote = headerLote.PreencherValorNaLinha(14, 16, layoutArquivo); // Nº da versão do Layout do Lote
                 headerLote = headerLote.PreencherValorNaLinha(17, 17, " "); // Uso Exclusivo FREBRABAN/CNAB
                 headerLote = headerLote.PreencherValorNaLinha(18, 18, infoHeaderLote.NumeroInscricao.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
                         ? "1"
                         : "2");
                 headerLote = headerLote.PreencherValorNaLinha(19, 33,
                     infoHeaderLote.NumeroInscricao.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(15, '0'));
-                headerLote = headerLote.PreencherValorNaLinha(34, 39, infoHeaderLote.CodigoCedente.PadLeft(6, '0'));
-                headerLote = headerLote.PreencherValorNaLinha(40, 53, string.Empty.PadLeft(14, '0'));
+                headerLote = headerLote.PreencherValorNaLinha(34, 40, infoHeaderLote.CodigoCedente.PadRight(7, '0'));
+                headerLote = headerLote.PreencherValorNaLinha(41, 53, string.Empty.PadLeft(13, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(54, 58, infoHeaderLote.Agencia.PadLeft(5, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(59, 59, infoHeaderLote.DigitoAgencia);
-                headerLote = headerLote.PreencherValorNaLinha(60, 65, infoHeaderLote.CodigoCedente.PadLeft(6, '0'));
+                headerLote = headerLote.PreencherValorNaLinha(60, 65, infoHeaderLote.CodigoCedente.Length == 7 ? "000000":infoHeaderLote.CodigoCedente.PadRight(6, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(66, 72, string.Empty.PadLeft(7, '0')); // Código do Modelo Personalizado
                 headerLote = headerLote.PreencherValorNaLinha(73, 73, "0"); // Uso Exclusivo da CAIXA
                 headerLote = headerLote.PreencherValorNaLinha(74, 103, nomeCedente.PadRight(30, ' '));
@@ -233,7 +239,7 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(16, 17, "01"); // Código de Movimento Remessa
                 segmentoP = segmentoP.PreencherValorNaLinha(18, 22, infoSegmentoP.AgenciaMantenedora.PadLeft(5, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(23, 23, infoSegmentoP.DvAgenciaMantenedora);
-                segmentoP = segmentoP.PreencherValorNaLinha(24, 29, infoSegmentoP.CodigoCedente.PadLeft(6, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(24, 30, infoSegmentoP.CodigoCedente.PadRight(7, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(30, 37, string.Empty.PadLeft(8, '0')); // Uso Exclusivo CAIXA
                 segmentoP = segmentoP.PreencherValorNaLinha(38, 40, string.Empty.PadLeft(3, '0')); // Uso Exclusivo CAIXA
 

@@ -302,5 +302,15 @@ namespace BoletoBr.Bancos.Sicoob
 
             return objRetornar;
         }
+
+        public DetalheSegmentoARetornoCnab240 ObterRegistrosDetalheA(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoBRetornoCnab240 ObterRegistrosDetalheB(string linha)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

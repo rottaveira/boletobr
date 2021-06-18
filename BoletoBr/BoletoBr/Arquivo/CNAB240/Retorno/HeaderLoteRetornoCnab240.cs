@@ -32,6 +32,7 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         public int CedenteCobranca { get; set; }
         public int CarteiraCobranca { get; set; }
         public int VariacaoCarteiraCobranca { get; set; }
+        public string FormaLancamento { get; set; }
 
         #endregion
 
@@ -47,6 +48,16 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// Neste caso o DV da Ag/Conta = 6
         /// </summary>
         public string DvAgenciaConta { get; set; }
+
+        public string Logradouro { get; set; }
+        public string Numero { get; set; }
+        public string Complemento { get; set; }
+        public string Cidade { get; set; }
+        public string Cep { get; set; }
+        public string ComplementoCep { get; set; }
+        public string Estado { get; set; }
+        public string Ocorrencia { get; set; }
+        public string FormaDePagamento { get; set; }
 
         #endregion
     }

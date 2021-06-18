@@ -22,9 +22,23 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.Especie = boleto.Especie;
             this.Aceite = boleto.Aceite;
             this.DataEmissao = boleto.DataDocumento;
+
             /*Juros Mora*/
             this.ValorJurosMora = boleto.JurosMora > 0 ? boleto.JurosMora : boleto.PercentualJurosMora > 0 ? boleto.PercentualJurosMora : 0;
-            this.CodigoJurosMora = boleto.JurosMora > 0 ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Valor) : boleto.PercentualJurosMora > 0 ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Percentual) : boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Isento);
+            this.CasasDecimaisJuros = boleto.JurosMora > 0 ? 2 : boleto.PercentualJurosMora > 0 ? 4 : 2;
+
+            this.CodigoJurosMora =
+                this.CodigoBanco == "246"
+                ? boleto.JurosMora > 0 || boleto.PercentualJurosMora > 0
+                    ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Mensal)
+                    : boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Isento)
+                :
+                boleto.JurosMora > 0
+                ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Valor)
+                : boleto.PercentualJurosMora > 0
+                    ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Percentual)
+                    : boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Isento);
+
             this.DataJurosMora = boleto.DataJurosMora;
             /*Instruções para protesto*/
             this.PrazoProtesto = boleto.CarteiraCobranca.QtdDiasProtesto;
@@ -42,6 +56,9 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.BancoEmiteBoleto = boleto.CarteiraCobranca.BancoEmiteBoleto;
             this.NumeroContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
             this.DigitoContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
+
+            this.NossoNumero = boleto.NossoNumeroFormatado;
+            this.Convenio = boleto.CedenteBoleto.Convenio;
         }
 
         public string CodigoBanco { get; set; }
@@ -72,6 +89,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public int CodigoJurosMora { get; set; }
         public DateTime DataJurosMora { get; set; }
         public decimal? ValorJurosMora { get; set; }
+        public int CasasDecimaisJuros { get; set; }
         public int CodigoDesconto1 { get; set; }
         public DateTime DataDesconto1 { get; set; }
         public decimal? ValorDesconto1 { get; set; }
@@ -86,5 +104,6 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public bool BancoEmiteBoleto { get; set; }
         public string NumeroContaCorrente { get; set; }
         public string DigitoContaCorrente { get; set; }
+        public string Convenio { get; set; }
     }
 }

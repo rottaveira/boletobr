@@ -1234,5 +1234,15 @@ namespace BoletoBr.Bancos.Hsbc
         {
             return 0;
         }
+
+        public RetornoGenericoPagamento LerArquivoRetornoPagamento(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaPagamento(string numeroOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

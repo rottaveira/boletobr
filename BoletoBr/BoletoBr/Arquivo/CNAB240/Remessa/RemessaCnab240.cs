@@ -48,5 +48,29 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
 
             return detalheRemessaAdd;
         }
+
+        public DetalheRemessaCnab240 AdicionarBoletoAoLote(LoteRemessaCnab240 loteContainer, Pagamento pagamentoAdicionar, int contador, int reg1, int reg2)
+        {
+            var detalheRemessaAdd = new DetalheRemessaCnab240(pagamentoAdicionar, contador);
+            var numeroRegistroNoLote = 0;
+
+            if (string.IsNullOrEmpty(pagamentoAdicionar.CodBarras))
+            {
+                numeroRegistroNoLote = reg1;
+                detalheRemessaAdd.SegmentoA = new DetalheSegmentoARemessaCnab240(pagamentoAdicionar, numeroRegistroNoLote);
+                numeroRegistroNoLote = reg2;
+                detalheRemessaAdd.SegmentoB = new DetalheSegmentoBRemessaCnab240(pagamentoAdicionar, numeroRegistroNoLote);
+            }
+            else
+            {
+                /*é adicionado em lote separado dos registros AB*/
+                numeroRegistroNoLote = reg1;
+                detalheRemessaAdd.SegmentoJ = new DetalheSegmentoJRemessaCnab240(pagamentoAdicionar, numeroRegistroNoLote);
+            }
+
+            loteContainer.RegistrosDetalheSegmentos.Add(detalheRemessaAdd);
+
+            return detalheRemessaAdd;
+        }
     }
 }

@@ -4,8 +4,7 @@ using System.Drawing;
 using System.Linq;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
-using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.Bancos.Safra;
+using BoletoBr.Arquivo.Generico.Retorno; 
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
@@ -911,6 +910,16 @@ namespace BoletoBr.Bancos.Banestes
         public int CodigoProteso(bool protestar = true)
         {
             return 0;
+        }
+
+        public RetornoGenericoPagamento LerArquivoRetornoPagamento(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaPagamento(string numeroOcorrencia)
+        {
+            throw new NotImplementedException();
         }
     }
 }

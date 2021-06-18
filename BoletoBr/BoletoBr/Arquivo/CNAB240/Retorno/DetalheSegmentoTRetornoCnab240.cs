@@ -72,5 +72,12 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// </summary>
         public long NumeroContrato { get; set; }
         #endregion
+
+        #region ABC
+        public string Classificacao{ get; set; }
+        public string ModalidadeCorrespondente { get; set; }
+        public string ModalidadeCedente { get; set; }
+        public string UsoBanco { get; set; }
+        #endregion
     }
 } 

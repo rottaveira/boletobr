@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -59,6 +62,8 @@
     </Compile>
     <Compile Include="TestsBancosRemessa\TestRemessaBancoBrasil.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBradesco.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaAbc.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaSicredi.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSicoob.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaCef.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaDaycoval.cs" />
@@ -66,18 +71,23 @@
     <Compile Include="TestsBancosRemessa\TestRemessaSantander.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBRB.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoDoBrasil.cs" />
+    <Compile Include="TestsBancosRetorno\TestRetornoBancoSicredi.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoItau.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBradesco.cs" />
+    <Compile Include="TestsBancosRetorno\TestRetornoAbc.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoCef.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoDaycoval.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoHsbcCnr.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoBRB.cs" />
+    <Compile Include="TestsBancosRetorno\TestRetornoSicoob.cs" />
     <Compile Include="TestsBancos\BancoAmazoniaTests.cs" />
     <Compile Include="TestsBancos\BancoBanestesTests.cs" />
     <Compile Include="TestsBancos\BancoBradescoTests.cs" />
     <Compile Include="TestsBancos\BancoBrasilTests.cs" />
     <Compile Include="TestsBancos\BancoCefTests.cs" />
     <Compile Include="TestsBancos\BancoSafraTests.cs" />
+    <Compile Include="TestsBancos\BancoAbcTests.cs" />
+    <Compile Include="TestsBancos\BancoSicrediTests.cs" />
     <Compile Include="TestsBancos\BancoSantanderTests.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />
     <Compile Include="TestsBancos\BancoBRBTests.cs" />
@@ -104,6 +114,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="TestsBancosRetorno\399.TRD.txt" />
   </ItemGroup>
   <ItemGroup>

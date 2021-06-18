@@ -15,6 +15,7 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         public decimal ValorAbatimentoConcedido { get; set; }
         public decimal ValorIofRecolhido { get; set; }
         public decimal ValorPagoPeloSacado { get; set; }
+        public decimal ValorOcorrencia { get; set; }
         public decimal ValorLiquidoASerCreditado { get; set; }
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorOutrosCreditos { get; set; }

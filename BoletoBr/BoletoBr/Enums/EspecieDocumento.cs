@@ -45,7 +45,11 @@ namespace BoletoBr.Enums
         CobrancaSeriada,
         NotaDeSeguro,
         CedulaProdutoRural,
-
+        
+        #region Sicredi
+        BoletoProposto,
+        #endregion
+        
         #region Banco do Brasil
 
         Warrant,
@@ -60,6 +64,16 @@ namespace BoletoBr.Enums
         ComplementacaoBoletoPeloCliente,
         CobrancaComEmissaoTotalBoletoPeloBanco,
         CobrancaComEmissaoTotalBoletoPeloCliente,
+
+        #endregion
+        
+        #region ABC
+
+        DividaAtivaEstado,
+        DividaAtivaMunicipio,
+        DividaAtivaUniao, 
+        CartaoDeCredito,
+        
 
         #endregion
     }

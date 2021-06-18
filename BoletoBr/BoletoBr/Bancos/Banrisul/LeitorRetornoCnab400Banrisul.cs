@@ -95,9 +95,24 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.LiteralRetorno = linha.ExtrairValorDaLinha(3, 9);
             objRetornar.CodigoDoServico = linha.ExtrairValorDaLinha(10, 11);
             objRetornar.LiteralServico = linha.ExtrairValorDaLinha(12, 19);
-            objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(27, 30).BoletoBrToInt();
-            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(31, 39);
-            
+
+            // Agencia possui apenas 3 digitos
+            if (string.IsNullOrWhiteSpace(linha.ExtrairValorDaLinha(39, 39).BoletoBrToStringSafe()))
+            {
+                var numeroConvenio = linha.ExtrairValorDaLinha(27, 38).BoletoBrToStringSafe();
+
+                objRetornar.NumeroConvenio = numeroConvenio.BoletoBrToStringSafe().PadLeft(13, '0');
+                objRetornar.CodigoAgenciaCedente = numeroConvenio.ExtrairValorDaLinha(1, 3).BoletoBrToInt();
+                objRetornar.CodigoDoBeneficiario = numeroConvenio.ExtrairValorDaLinha(4, 12).BoletoBrToStringSafe();
+            }
+            else
+            {
+                var numeroConvenio = linha.ExtrairValorDaLinha(27, 39).BoletoBrToStringSafe();
+
+                objRetornar.NumeroConvenio = numeroConvenio.BoletoBrToStringSafe();
+                objRetornar.CodigoAgenciaCedente = numeroConvenio.ExtrairValorDaLinha(1, 4).BoletoBrToInt();
+                objRetornar.CodigoDoBeneficiario = numeroConvenio.ExtrairValorDaLinha(5, 13).BoletoBrToStringSafe();
+            }               
 
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
@@ -116,8 +131,25 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).BoletoBrToInt();
             objRetornar.TipoInscricao = linha.ExtrairValorDaLinha(2, 3).BoletoBrToInt();
             objRetornar.NumeroInscricao = linha.ExtrairValorDaLinha(4, 17).BoletoBrToLong();
-            objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(18, 21).BoletoBrToInt();
-            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(22, 30).BoletoBrToInt();
+
+            // Agencia possui apenas 3 digitos
+            if(string.IsNullOrWhiteSpace(linha.ExtrairValorDaLinha(36, 36).BoletoBrToStringSafe()))
+            {
+                var numeroConvenio = linha.ExtrairValorDaLinha(18, 29).BoletoBrToStringSafe();
+
+                objRetornar.NumeroConvenio = numeroConvenio.BoletoBrToStringSafe().PadLeft(13, '0');
+                objRetornar.CodigoAgenciaCedente = numeroConvenio.ExtrairValorDaLinha(1, 3).BoletoBrToInt();
+                objRetornar.CodigoDoBeneficiario = numeroConvenio.ExtrairValorDaLinha(4, 12).BoletoBrToInt();
+            }
+            else
+            {
+                var numeroConvenio = linha.ExtrairValorDaLinha(18, 30).BoletoBrToStringSafe();
+
+                objRetornar.NumeroConvenio = numeroConvenio.BoletoBrToStringSafe();
+                objRetornar.CodigoAgenciaCedente = numeroConvenio.ExtrairValorDaLinha(1, 4).BoletoBrToInt();
+                objRetornar.CodigoDoBeneficiario = numeroConvenio.ExtrairValorDaLinha(5, 13).BoletoBrToInt();
+            }            
+
             /*
              * 1 – Cobrança Simples (8050.76)
              * 3 – Cobrança Caucionada (8150.55) Reservado
@@ -130,7 +162,7 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.SeuNumero = linha.ExtrairValorDaLinha(38, 62);
             //objRetornar.NossoNumero = linha.ExtrairValorDaLinha(63, 72);
             //objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(73, 82);
-            objRetornar.TipoCobranca = linha.ExtrairValorDaLinha(108, 108).BoletoBrToInt();
+            objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(108, 108).BoletoBrToStringSafe();
             objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).BoletoBrToStringSafe().BoletoBrToInt();
             objRetornar.DataDaOcorrencia = (DateTime) linha.ExtrairValorDaLinha(111, 116).BoletoBrToStringSafe().ToDateTimeFromDdMmAa();
 
@@ -144,12 +176,21 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 172).BoletoBrToInt();
             objRetornar.DvAgenciaCobradora = linha.ExtrairValorDaLinha(173, 173);
             objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175);
-            objRetornar.ValorTarifa = linha.ExtrairValorDaLinha(176, 188).BoletoBrToDecimal()/100;
+            objRetornar.TaxaBoleto = linha.ExtrairValorDaLinha(176, 188).BoletoBrToDecimal()/100;
             objRetornar.ValorAbatimento = linha.ExtrairValorDaLinha(228, 240).BoletoBrToDecimal()/100;
             objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).BoletoBrToDecimal()/100;
+
+            // Valor do título – Descontos + Outros recebimentos – Abatimentos – Outras despesas
             objRetornar.ValorPrincipal = linha.ExtrairValorDaLinha(254, 266).BoletoBrToDecimal()/100;
             objRetornar.ValorLiquidoRecebido = linha.ExtrairValorDaLinha(254, 266).BoletoBrToDecimal()/100;
-            objRetornar.ValorLiquidoRecebido += objRetornar.ValorTarifa;
+
+            /* O valor da tarifa não é descontado do valor pago
+              * Valor do título – Descontos + Outros recebimentos – Abatimentos – Outras despesas
+              * O valor de "Outras despesas" é diferente de "Despesas de cobrança"
+              * 
+              * objRetornar.ValorLiquidoRecebido += objRetornar.ValorTarifa;
+             */
+
             objRetornar.ValorJurosDeMora = linha.ExtrairValorDaLinha(267, 279).BoletoBrToDecimal()/100;
             objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(280, 292).BoletoBrToDecimal()/100;
             objRetornar.DataDeCredito =
