@@ -494,5 +494,10 @@ namespace BoletoBr
         public string CodigoDoPagadorNoAssociado { get; set; }
         public DateTime? DataPrevistaLancamentoConta{ get; set; }
         #endregion
+
+        #region Unicred
+        public string ComplementoMovimento { get; set; }
+        public string CodigoMovimento { get; set; }
+        #endregion
     }
 }

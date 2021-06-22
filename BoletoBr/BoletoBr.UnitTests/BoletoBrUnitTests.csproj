@@ -63,6 +63,7 @@
     <Compile Include="TestsBancosRemessa\TestRemessaBancoBrasil.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBradesco.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaAbc.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaUnicredi.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSicredi.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSicoob.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaCef.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="TestsBancos\BancoCefTests.cs" />
     <Compile Include="TestsBancos\BancoSafraTests.cs" />
     <Compile Include="TestsBancos\BancoAbcTests.cs" />
+    <Compile Include="TestsBancos\BancoUnicrediTests.cs" />
     <Compile Include="TestsBancos\BancoSicrediTests.cs" />
     <Compile Include="TestsBancos\BancoSantanderTests.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />

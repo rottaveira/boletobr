@@ -79,6 +79,7 @@ namespace BoletoBr.Enums
         AlteracaoDeValorPercentualDeMulta,
         DispensarCobrancaDeMulta,
         AlteracaoDoValorDeDesconto,
+        AlteracaoDoStatusDeDesconto,
         NaoConcederDesconto,
         AlteracaoDoValorDeAbatimento,
         AlteracaoDosDadosDoRateioDeCredito,

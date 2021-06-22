@@ -106,6 +106,9 @@ namespace BoletoBr.Fabricas
                     /* 104 - Caixa */
                     case "104":
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco + " ainda não foi implementado.");
+                    /* 136 - Unicred */
+                    case "136":
+                        return new BoletoBr.Bancos.UniCred.EscritorRemessaCnab400Unicred(remessaEscrever);
                     /* 237 - Bradesco */
                     case "237":
                         return new Bancos.Bradesco.EscritorRemessaCnab400Bradesco(remessaEscrever);

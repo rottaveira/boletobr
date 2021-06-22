@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraPrinting.BarCode.Interleaved2of5Generator interleaved2of5Generator1 = new DevExpress.XtraPrinting.BarCode.Interleaved2of5Generator();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+            this.MoraMulta2 = new DevExpress.XtraReports.UI.XRLabel();
             this.labelSacCaixa2 = new DevExpress.XtraReports.UI.XRLabel();
             this.labelSacCaixa1 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel68 = new DevExpress.XtraReports.UI.XRLabel();
@@ -250,7 +251,6 @@
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.xtraTabbedMdiManager1 = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.MoraMulta2 = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabbedMdiManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
@@ -440,6 +440,16 @@
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
+            // 
+            // MoraMulta2
+            // 
+            this.MoraMulta2.Font = new System.Drawing.Font("Arial", 6F);
+            this.MoraMulta2.LocationFloat = new DevExpress.Utils.PointFloat(548.7422F, 828.1953F);
+            this.MoraMulta2.Name = "MoraMulta2";
+            this.MoraMulta2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.MoraMulta2.SizeF = new System.Drawing.SizeF(121.8797F, 10.54932F);
+            this.MoraMulta2.StylePriority.UseFont = false;
+            this.MoraMulta2.Text = "( + ) Multa/Mora";
             // 
             // labelSacCaixa2
             // 
@@ -1518,7 +1528,7 @@
             this.xrLabel27.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "CodigoEDigitoBancoBind")});
             this.xrLabel27.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
-            this.xrLabel27.LocationFloat = new DevExpress.Utils.PointFloat(124.498F, 98.97826F);
+            this.xrLabel27.LocationFloat = new DevExpress.Utils.PointFloat(124.498F, 95.49999F);
             this.xrLabel27.Name = "xrLabel27";
             this.xrLabel27.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel27.SizeF = new System.Drawing.SizeF(52.96906F, 23F);
@@ -1538,7 +1548,7 @@
             // 
             this.logo1.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Image", null, "BancoBoleto.LogotipoBancoParaExibicao")});
-            this.logo1.LocationFloat = new DevExpress.Utils.PointFloat(2.275085F, 89.99999F);
+            this.logo1.LocationFloat = new DevExpress.Utils.PointFloat(2.275085F, 88.4497F);
             this.logo1.Name = "logo1";
             this.logo1.SizeF = new System.Drawing.SizeF(114.0225F, 28.5F);
             this.logo1.Sizing = DevExpress.XtraPrinting.ImageSizeMode.ZoomImage;
@@ -2684,16 +2694,6 @@
             // bindingSource1
             // 
             this.bindingSource1.DataSource = typeof(BoletoBr.Boleto);
-            // 
-            // MoraMulta2
-            // 
-            this.MoraMulta2.Font = new System.Drawing.Font("Arial", 6F);
-            this.MoraMulta2.LocationFloat = new DevExpress.Utils.PointFloat(548.7422F, 828.1953F);
-            this.MoraMulta2.Name = "MoraMulta2";
-            this.MoraMulta2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.MoraMulta2.SizeF = new System.Drawing.SizeF(121.8797F, 10.54932F);
-            this.MoraMulta2.StylePriority.UseFont = false;
-            this.MoraMulta2.Text = "( + ) Multa/Mora";
             // 
             // BoletoGenericoRpt
             // 

@@ -761,6 +761,11 @@ namespace BoletoBr
             return DateDiff(DateInterval.Day, dateBase, dataParaCalculo);
         }
 
+        /// <summary>
+        /// Sicredi - valido para Unicred também
+        /// </summary>
+        /// <param name="seq"></param>
+        /// <returns></returns>
         public static int Mod10Sicredi(string seq)
         {
             /* Variáveis

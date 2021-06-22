@@ -123,6 +123,9 @@
     <Compile Include="Bancos\Sicredi\BancoSicredi.cs" />
     <Compile Include="Bancos\Sicredi\EscritorRemessaCnab400Sicredi.cs" />
     <Compile Include="Bancos\Sicredi\LeitorRetornoCnab400Sicredi.cs" />
+    <Compile Include="Bancos\Unicred\BancoUnicred.cs" />
+    <Compile Include="Bancos\Unicred\EscritorRemessaCnab400Unicred.cs" />
+    <Compile Include="Bancos\Unicred\LeitorRetornoCnab400Unicred.cs" />
     <Compile Include="Dominio\Banco.cs" />
     <Compile Include="Dominio\InformacoesAdicionais.cs" />
     <Compile Include="Dominio\Pagamento.cs" />

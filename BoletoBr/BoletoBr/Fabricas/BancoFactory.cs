@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Bancos;
+﻿using System; 
 using BoletoBr.Bancos.Banrisul;
-using BoletoBr.Bancos.Brasil;
-using BoletoBr.Bancos.Daycoval;
+using BoletoBr.Bancos.Brasil; 
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Fabricas
@@ -35,7 +29,9 @@ namespace BoletoBr.Fabricas
                     /* 104 - Caixa */
                     case "104":
                         return new Bancos.Cef.BancoCef();
-                        
+                    /* 136 - Unicredi */
+                    case "136":
+                        return new Bancos.Unicred.BancoUnicred();                        
                     /* 237 - Bradesco */
                     case "237":
                         return new Bancos.Bradesco.BancoBradesco();
