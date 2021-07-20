@@ -63,7 +63,6 @@
     <Compile Include="TestsBancosRemessa\TestRemessaBancoBrasil.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBradesco.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaAbc.cs" />
-    <Compile Include="TestsBancosRemessa\TestRemessaUnicredi.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSicredi.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSicoob.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaCef.cs" />
@@ -71,6 +70,7 @@
     <Compile Include="TestsBancosRemessa\TestRemessaItau.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSantander.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBRB.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaUnicred.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoDoBrasil.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoSicredi.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoItau.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="TestsBancosRetorno\TestRetornoHsbcCnr.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoBRB.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoSicoob.cs" />
+    <Compile Include="TestsBancosRetorno\TestRetornoUnicred.cs" />
     <Compile Include="TestsBancos\BancoAmazoniaTests.cs" />
     <Compile Include="TestsBancos\BancoBanestesTests.cs" />
     <Compile Include="TestsBancos\BancoBradescoTests.cs" />
@@ -88,13 +89,13 @@
     <Compile Include="TestsBancos\BancoCefTests.cs" />
     <Compile Include="TestsBancos\BancoSafraTests.cs" />
     <Compile Include="TestsBancos\BancoAbcTests.cs" />
-    <Compile Include="TestsBancos\BancoUnicrediTests.cs" />
     <Compile Include="TestsBancos\BancoSicrediTests.cs" />
     <Compile Include="TestsBancos\BancoSantanderTests.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />
     <Compile Include="TestsBancos\BancoBRBTests.cs" />
     <Compile Include="TestsBancos\BancoBanrisulTests.cs" />
     <Compile Include="TestsBancos\BancoSicoobTests.cs" />
+    <Compile Include="TestsBancos\BancoUnicrediTests.cs" />
     <Compile Include="TestsCommon\CommonTests.cs" />
     <Compile Include="TestsCommon\FatorVencimentoTests.cs" />
     <Compile Include="TestsBancos\BancoHsbcTests.cs" />

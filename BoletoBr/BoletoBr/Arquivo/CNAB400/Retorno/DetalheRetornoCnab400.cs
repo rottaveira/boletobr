@@ -492,7 +492,7 @@ namespace BoletoBr
         public string TipoCobrancaSicredi { get; set; }
         public string CodigoDoPagadorNaCooperativa { get; set; }
         public string CodigoDoPagadorNoAssociado { get; set; }
-        public DateTime? DataPrevistaLancamentoConta{ get; set; }
+        public DateTime? DataPrevistaLancamentoConta { get; set; }
         #endregion
 
         #region Unicred

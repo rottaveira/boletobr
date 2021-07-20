@@ -212,12 +212,17 @@ namespace BoletoBr.Bancos.Itau
                          (boleto.CarteiraCobranca.Codigo == "142") || (boleto.CarteiraCobranca.Codigo == "143") ||
                          (boleto.CarteiraCobranca.Codigo == "196"))
                 {
-                    boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", CodigoBanco, MoedaBanco,
-                        Common.FatorVencimento(boleto.DataVencimento), boleto.ValorBoleto,
+                    boleto.CodigoBarraBoleto = 
+                        string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", 
+                        CodigoBanco, 
+                        MoedaBanco,
+                        Common.FatorVencimento(boleto.DataVencimento), 
+                        boleto.ValorBoleto,
                         boleto.CarteiraCobranca.Codigo,
-                        boleto.IdentificadorInternoBoleto.PadLeft(8, '0'), numeroDocumento, codigoCedente,
-                        Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.IdentificadorInternoBoleto +
-                                     numeroDocumento + codigoCedente));
+                        boleto.IdentificadorInternoBoleto.PadLeft(8, '0'), 
+                        numeroDocumento, 
+                        codigoCedente,
+                        Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.IdentificadorInternoBoleto + numeroDocumento + codigoCedente));
                 }
 
                 _dacBoleto = Common.Mod11(boleto.CodigoBarraBoleto, 9, 0);
@@ -237,7 +242,7 @@ namespace BoletoBr.Bancos.Itau
         {
             try
             {
-                var numeroDocumento = boleto.NumeroDocumento.Replace("-", "").PadLeft(7, '0');
+                var numeroDocumento = boleto.IdentificadorInternoBoleto.Replace("-", "").PadLeft(7, '0');
                 var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
 
                 var AAA = CodigoBanco;
@@ -245,12 +250,12 @@ namespace BoletoBr.Bancos.Itau
                 var CCC = boleto.CarteiraCobranca.Codigo;
                 
                 // PEGAR O NÚMERO DOCUMENTO JÁ FORMATADO COM ZEROS
-                var DD = boleto.NumeroDocumento.Replace("/", "").Replace("-", "").Substring(0, 2);
+                var DD = boleto.IdentificadorInternoBoleto.Replace("/", "").Replace("-", "").PadLeft(8, '0').Substring(0, 2);
                 var X = Common.Mod10(AAA + B + CCC + DD).ToString();
                 var LD = string.Empty; /* Linha Digitável */
 
                 // PEGAR O NÚMERO DOCUMENTO JÁ FORMATADO COM ZEROS
-                var DDDDDD = boleto.NumeroDocumento.Replace("/", "").Replace("-", "").Substring(2, 6);
+                var DDDDDD = boleto.IdentificadorInternoBoleto.Replace("/", "").Replace("-", "").PadLeft(8, '0').Substring(2, 6);
 
                 var K = string.Format(" {0} ", _dacBoleto);
 

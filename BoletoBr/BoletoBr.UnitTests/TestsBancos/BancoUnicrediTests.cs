@@ -1,5 +1,5 @@
 ﻿using System;
-using BoletoBr.Arquivo; 
+using BoletoBr.Arquivo;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -45,14 +45,14 @@ namespace BoletoBr.UnitTests.TestsBancos
                 NumeroDocumento = "14369",
                 ValorBoleto = Convert.ToDecimal(222),
                 IdentificadorInternoBoleto = "23083",
-                DataVencimento = new DateTime(2019, 02, 28) 
+                DataVencimento = new DateTime(2019, 02, 28)
             };
 
             banco.FormatarBoleto(boleto);
 
             Assert.IsTrue(boleto.NossoNumeroFormatado.Length == 12);
         }
-         
+
         [TestMethod]
         public void CalcularLinhaDigitavelCarteiraUnicredi()
         {
@@ -94,16 +94,16 @@ namespace BoletoBr.UnitTests.TestsBancos
             banco.FormatarBoleto(boleto);
 
             var linha_banco = boleto.LinhaDigitavelBoleto.Substring(0, 3);
-            var linha_Moeda = boleto.LinhaDigitavelBoleto.Substring(3,1);
-            var Valor1 = boleto.LinhaDigitavelBoleto.Substring(48,10);
-        
-            Assert.AreEqual(boleto.NossoNumeroFormatado.Replace("/","").Replace("-",""),"00000230839");
+            var linha_Moeda = boleto.LinhaDigitavelBoleto.Substring(3, 1);
+            var Valor1 = boleto.LinhaDigitavelBoleto.Substring(48, 10);
+
+            Assert.AreEqual(boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", ""), "00000230839");
             Assert.AreEqual(linha_banco, banco.CodigoBanco);
             Assert.AreEqual(Valor1, "0000022200");
             Assert.AreEqual(boleto.LinhaDigitavelBoleto.Replace(".", "").Replace(" ", "").Length, 47);
         }
-         
+
         #endregion
-         
+
     }
 }

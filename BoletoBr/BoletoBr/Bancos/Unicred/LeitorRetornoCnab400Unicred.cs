@@ -103,8 +103,8 @@ namespace BoletoBr.Bancos.BancoUnicred
             /* Brancos */
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(80, 94);
-            objRetornar.DataGeracaoGravacao = (DateTime)linha.ExtrairValorDaLinha(95, 100).ToString().ToDateTimeFromDdMmAa();
-           
+            objRetornar.DataGeracaoGravacao = (DateTime)linha.ExtrairValorDaLinha(95, 100).ToString().ToDateTimeFromDdMmAa().GetValueOrDefault();
+
             /* Brancos */
             objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(108, 121);
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400);
@@ -126,11 +126,11 @@ namespace BoletoBr.Bancos.BancoUnicred
             objRetornar.DvContaCorrente = linha.ExtrairValorDaLinha(31, 31);
             objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(32, 45).BoletoBrToInt();
             objRetornar.NossoNumero = linha.ExtrairValorDaLinha(46, 62);
-            
+
             // Brancos
             objRetornar.CodigoMovimento = linha.ExtrairValorDaLinha(109, 110).ToString();
             objRetornar.DataLiquidacao = (DateTime)linha.ExtrairValorDaLinha(111, 116).ToString().ToDateTimeFromDdMmAa();
-     
+
             // Brancos 
             objRetornar.DataDeVencimento = linha.ExtrairValorDaLinha(147, 152).BoletoBrToStringSafe().ToDateTimeFromDdMmAa() ?? DateTime.MinValue;
             objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).BoletoBrToDecimal() / 100;
@@ -148,7 +148,7 @@ namespace BoletoBr.Bancos.BancoUnicred
 
             // Brancos 
             objRetornar.ComplementoMovimento = linha.ExtrairValorDaLinha(319, 326);
-            objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(327, 328).BoletoBrToInt(); 
+            objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(327, 328).BoletoBrToInt();
             // Brancos 
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).BoletoBrToInt();
 
@@ -159,7 +159,7 @@ namespace BoletoBr.Bancos.BancoUnicred
         {
             var objRetornar = new TrailerRetornoCnab400();
 
-            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).BoletoBrToInt(); 
+            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).BoletoBrToInt();
             // Brancos
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).BoletoBrToInt();
 

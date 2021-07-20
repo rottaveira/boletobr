@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BoletoBr.Arquivo;
 using BoletoBr.Arquivo.CNAB400.Remessa;
-using BoletoBr.Bancos.UniCred; 
+using BoletoBr.Bancos.UniCred;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -31,7 +31,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca { Codigo = "1" };
+            var carteira = new CarteiraCobranca { Codigo = "21" };
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa)
             {
@@ -52,8 +52,8 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             var cnab400 = new RemessaCnab400()
             {
                 Header = new HeaderRemessaCnab400(boleto, 1, 1),
-                RegistrosDetalhe = new List<DetalheRemessaCnab400>() { new DetalheRemessaCnab400(boleto,2)},
-                Trailer = new TrailerRemessaCnab400(12345,3)
+                RegistrosDetalhe = new List<DetalheRemessaCnab400>() { new DetalheRemessaCnab400(boleto, 2) },
+                Trailer = new TrailerRemessaCnab400(12345, 3)
 
             };
 
@@ -68,10 +68,10 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_REMESSA", ".txt");
 
             var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.Write(string.Join(Environment.NewLine,linhasEscrever));
+            arquivo.Write(string.Join(Environment.NewLine, linhasEscrever));
 
             arquivo.Close();
         }
-         
+
     }
 }

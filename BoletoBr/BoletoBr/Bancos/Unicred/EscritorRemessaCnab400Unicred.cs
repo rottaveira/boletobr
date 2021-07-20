@@ -28,7 +28,7 @@ namespace BoletoBr.Bancos.UniCred
             foreach (var detalheAdicionar in remessaEscrever.RegistrosDetalhe)
             {
                 listaRetornar.AddRange(new[] { EscreverDetalhe(detalheAdicionar, sequencial) });
-                sequencial++; 
+                sequencial++;
             }
 
             listaRetornar.Add(EscreverTrailer(remessaEscrever.Trailer, sequencial, codCedente));
@@ -53,7 +53,7 @@ namespace BoletoBr.Bancos.UniCred
                 header = header.PreencherValorNaLinha(10, 11, "01");
                 header = header.PreencherValorNaLinha(12, 26, "COBRANCA".PadRight(15, ' '));
                 header = header.PreencherValorNaLinha(27, 46, infoHeader.CodigoEmpresa.PadLeft(20, '0'));
-                header = header.PreencherValorNaLinha(47, 76, infoHeader.NomeEmpresa.PadRight(30, ' '));
+                header = header.PreencherValorNaLinha(47, 76, nomeEmpresa.PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(77, 79, "136");
                 header = header.PreencherValorNaLinha(80, 94, "UNICRED".PadRight(15, ' '));
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy").Replace("/", ""));
@@ -84,12 +84,12 @@ namespace BoletoBr.Bancos.UniCred
 
             if (String.IsNullOrEmpty(infoDetalhe.NumeroDocumento))
                 throw new Exception("Informe um número de documento!");
-             
-            
+
+
             #region Variáveis
             var detalhe = new string(' ', 400);
             try
-            { 
+            {
                 var objBanco = BancoFactory.ObterBanco(infoDetalhe.CodigoBanco);
 
                 string nossoNumeroSequencial =
@@ -150,16 +150,16 @@ namespace BoletoBr.Bancos.UniCred
                 var protesto = infoDetalhe.NroDiasParaProtesto > 0 ? "2" : "3";
 
                 detalhe = detalhe.PreencherValorNaLinha(1, 1, "1"); // Identificação do Registro Transação
-                detalhe = detalhe.PreencherValorNaLinha(2, 6,  infoDetalhe.Agencia.ToString().PadLeft(5,'0')); //Agência do BENEFICIÁRIO na UNICRED  
-                detalhe = detalhe.PreencherValorNaLinha(7, 7,  infoDetalhe.DvAgencia.PadRight(1, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(2, 6, infoDetalhe.Agencia.ToString().PadLeft(5, '0')); //Agência do BENEFICIÁRIO na UNICRED  
+                detalhe = detalhe.PreencherValorNaLinha(7, 7, infoDetalhe.DvAgencia.PadRight(1, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(8, 19, infoDetalhe.ContaCorrente.ToString().PadLeft(12, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(20, 20, infoDetalhe.DvContaCorrente.ToString().PadRight(1, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(21, 21, "0");
                 detalhe = detalhe.PreencherValorNaLinha(22, 24, "021"); //Código carteira
-                detalhe = detalhe.PreencherValorNaLinha(25, 37, string.Empty.PadLeft(13, '0'));  
+                detalhe = detalhe.PreencherValorNaLinha(25, 37, string.Empty.PadLeft(13, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(38, 62, string.Empty.PadLeft(25, ' ')); //Uso Empresa 
                 detalhe = detalhe.PreencherValorNaLinha(63, 65, "136"); //cod Banco
-                detalhe = detalhe.PreencherValorNaLinha(66, 67, "00"); 
+                detalhe = detalhe.PreencherValorNaLinha(66, 67, "00");
                 detalhe = detalhe.PreencherValorNaLinha(68, 92, string.Empty.PadLeft(25, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(93, 93, "0");
                 detalhe = detalhe.PreencherValorNaLinha(94, 94, codigoMulta);
@@ -174,18 +174,21 @@ namespace BoletoBr.Bancos.UniCred
                 detalhe = detalhe.PreencherValorNaLinha(140, 149, string.Empty.PadLeft(10, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(150, 150, codigoDesconto);
                 detalhe = detalhe.PreencherValorNaLinha(151, 156, infoDetalhe.DataEmissao.ToString("ddMMyy").Replace("/", ""));
-                detalhe = detalhe.PreencherValorNaLinha(157, 157, "0"); 
-                detalhe = detalhe.PreencherValorNaLinha(158, 158, protesto);  
-                detalhe = detalhe.PreencherValorNaLinha(159, 160, infoDetalhe.NroDiasParaProtesto.ToString().PadLeft(2,'0'));  
-                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorJuros.ToStringParaValoresDecimais().PadLeft(13, '0'));
-               
+                detalhe = detalhe.PreencherValorNaLinha(157, 157, "0");
+                detalhe = detalhe.PreencherValorNaLinha(158, 158, protesto);
+                detalhe = detalhe.PreencherValorNaLinha(159, 160, infoDetalhe.NroDiasParaProtesto.ToString().PadLeft(2, '0'));
+
+                var valorMora = Math.Round((infoDetalhe.ValorBoleto * (infoDetalhe.ValorMoraDia / 100)) / 30, 2);
+
+                detalhe = detalhe.PreencherValorNaLinha(161, 173, valorMora.ToStringParaValoresDecimais().PadLeft(13, '0'));
+
                 if (infoDetalhe.DataLimiteConcessaoDesconto > DateTime.MinValue)
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataLimiteConcessaoDesconto.ToString("ddMMyy").Replace("/", ""));
                 else
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, "000000");
 
                 detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaValoresDecimais().PadLeft(13, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(193, 203, infoDetalhe.NossoNumero.Replace("/", "").Replace("-", "").PadLeft(11,'0'));
+                detalhe = detalhe.PreencherValorNaLinha(193, 203, infoDetalhe.NossoNumeroFormatado.Replace("/", "").Replace("-", "").PadLeft(11, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(204, 205, "00");
                 detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaValoresDecimais().PadLeft(13, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(219, 220, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11 ? "01" : "02");
@@ -205,13 +208,13 @@ namespace BoletoBr.Bancos.UniCred
                     cidade = cidade.Substring(0, 20);
 
                 detalhe = detalhe.PreencherValorNaLinha(275, 314, endereco.PadRight(40, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(315, 326, bairro.PadRight(12, ' ')); 
+                detalhe = detalhe.PreencherValorNaLinha(315, 326, bairro.PadRight(12, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(327, 334, infoDetalhe.CepPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadRight(8, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(335, 354, cidade.PadRight(20, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(355, 356, infoDetalhe.UfPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadRight(2, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(357, 394, string.Empty.PadLeft(38, ' ')); 
+                detalhe = detalhe.PreencherValorNaLinha(357, 394, string.Empty.PadLeft(38, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(395, 400, sequenciaDetalhe.ToString().PadLeft(6, '0'));
-                 
+
                 return detalhe;
             }
             catch (Exception e)
@@ -220,14 +223,14 @@ namespace BoletoBr.Bancos.UniCred
                     Environment.NewLine), e);
             }
         }
-  
+
         public string EscreverTrailer(TrailerRemessaCnab400 infoTrailer, int sequenciaTrailer, string contaCedente)
         {
             var trailer = new string(' ', 400);
             try
             {
                 trailer = trailer.PreencherValorNaLinha(1, 1, "9");
-                trailer = trailer.PreencherValorNaLinha(2, 394, string.Empty.PadLeft(393, ' ')); 
+                trailer = trailer.PreencherValorNaLinha(2, 394, string.Empty.PadLeft(393, ' '));
                 trailer = trailer.PreencherValorNaLinha(395, 400, sequenciaTrailer.ToString().PadLeft(6, '0'));
 
                 return trailer;

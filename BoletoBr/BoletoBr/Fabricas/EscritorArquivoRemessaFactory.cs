@@ -16,7 +16,7 @@ namespace BoletoBr.Fabricas
             try
             {
                 switch (remessaEscrever.Header.CodigoBanco.PadLeft(3, '0'))
-                { 
+                {
                     case "001": /* 001 - Banco do Brasil */
                         return new Bancos.Brasil.EscritorRemessaPagamentoCnab240BancoDoBrasil(remessaEscrever);
                     case "237": /* 237 - Bradesco */
@@ -63,8 +63,8 @@ namespace BoletoBr.Fabricas
                     /* 237 - Bradesco */
                     case "237":
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco + " ainda não foi implementado.");
-                    
-                        /* 237 - ABC */
+
+                    /* 237 - ABC */
                     case "246":
                         return new Bancos.Abc.EscritorRemessaCnab240Abc(remessaEscrever);
 

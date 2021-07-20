@@ -766,6 +766,7 @@ namespace BoletoBr
         /// </summary>
         /// <param name="seq"></param>
         /// <returns></returns>
+
         public static int Mod10Sicredi(string seq)
         {
             /* Variáveis
